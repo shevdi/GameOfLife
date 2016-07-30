@@ -5,7 +5,7 @@
 var View = function () {
 	var updateView = function ( field ) {	      
         $('#field tr').remove();
-
+        
         // Рисуются ряды в таблице, затем колонки. В id записан номер колонки и ряда.
         for( var i = 0; i < field[0].length; i++ ){
             $('#field').append( "<tr id='row_num"  + field[i][0][0] + "'></tr>" );
@@ -17,14 +17,15 @@ var View = function () {
         
     //set the handlers for the view
     var initView = function(){
-        //create field
+        // создать поле
         $("#createButton").on("click", function(){
             var event = jQuery.Event("createField");
             event.size = $('#size')[0].value;            
             $('body').trigger(event);
             $('#size')[0].value = '';            
         });
-        // track enter key
+
+        // создать поле с энтером
         $('#createButton').on("keypress", function(e){
           if(e.which == 13){
             var event = jQuery.Event("createField");
@@ -34,13 +35,18 @@ var View = function () {
            }
         });
 
-        // change dot status
-        $('td').live("click", function(e){
-             
+        // изменить статус точки
+        $('td').live("click", function(e){             
             var $dot = e.currentTarget;
             var event = jQuery.Event("changeStatus");
             event.id = $($dot).attr('id');
             event.dot = $($dot).attr('class');
+            $('body').trigger(event);
+        }); 
+
+        // Слудующий шаг
+        $('#nextButton').on("click", function(){
+            var event = jQuery.Event("changeState");
             $('body').trigger(event);
         }); 
     };
