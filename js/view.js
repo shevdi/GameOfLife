@@ -2,15 +2,24 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 var View = function () {
+    
+
 	var updateView = function ( field ) {	      
         $('#field tr').remove();
         
         // Рисуются ряды в таблице, затем колонки. В id записан номер колонки и ряда.
-        for( var i = 0; i < field[0].length; i++ ){
-            $('#field').append( "<tr id='row_num"  + field[i][0][0] + "'></tr>" );
+        for( var i = 0; i < field.length; i++ ){
+            $('#field').append( "<tr id='row_num"  + field[i][0].x + "'></tr>" );
                 for( var j = 0; j < field[0].length; j++ ){
-                    $('tr[id="row_num' + i + '"]').append("<td id='row" + field[i][j][0] + "_col" + field[i][j][1] + "' class='" + field[i][j][2] + "'></td>" );
+                    if(field[i][j].status==1){
+                        var status = 'alive'
+                    }
+                    else{
+                        var status = 'dead'
+                    }
+                    $('tr[id="row_num' + i + '"]').append("<td id='row" + field[i][j].x + "_col" + field[i][j].y + "' class='" + status + "'></td>" );
                 }
         }        
 	};

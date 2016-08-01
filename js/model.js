@@ -2,14 +2,28 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+var Dot = function(x, y){
+    this.x = x;
+    this.y = y;
+    this.status = 0;
+}
+Dot.prototype = {
+    isAlive : function() {
+        if(this.status==1)
+            return 'alive';
+        else
+            return 'dead';
+    }
+};
+
 var Model = function () {
     var field = new Array();
-
-  	var notifyController = function () {	
+    
+    var notifyController = function () {    
         $('body').trigger('updateView');
-  	}
+    }
     // public methods
-  	return  {
+    return  {
         createField: function ( size ) {   
             field = []; 
             for( var i = 0; i < size; i++ )
@@ -17,28 +31,27 @@ var Model = function () {
                 field.push([]);   
                 for( var j = 0; j < size; j++ )
                 {
-                    field[i].push([i,j,'dead', 0]);              
+                    field[i].push(new Dot(i, j));              
                 }             
             }             
+            // console.log(field[2][2].isAlive());
             notifyController();
-      	},
+        },
 
         fieldState: function ( _field ) {   
-            field = _field;   
+            field = _field;  
             notifyController();
         },
 
         dotStatus: function( row, col, status ){ 
 
             // При смене цвета точки таблица не перерисовывается
-            if(field[row][col][2] == 'dead'){
-                field[row][col][2] = "live";
-                field[row][col][3] = 1;
-                $('#row' + row + '_col' + col).attr('class', 'live');
+            if(field[row][col].status == 0){
+                field[row][col].status = 1;
+                $('#row' + row + '_col' + col).attr('class', 'alive');
             }
             else{
-                field[row][col][2] = "dead";
-                field[row][col][3] = 0;
+                field[row][col].status = 0;
                 $('#row' + row + '_col' + col).attr('class', 'dead');
             }
             // notifyController();
@@ -47,7 +60,7 @@ var Model = function () {
         getData: function(){           
             return field;
         }
-  	};
+    };
 };
 
 

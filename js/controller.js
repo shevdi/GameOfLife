@@ -14,18 +14,14 @@ var Controller = function (view, model) {
 
         $('body').bind('changeState', function(e) { 
             var field = _model.getData();
-            var newField = JSON.parse(JSON.stringify( field )); 
-            console.log(newField);
+            var newField = JSON.parse(JSON.stringify( field ));
             
             var len = field.length;
             len = --len;
-            console.log(field[2][2][2]);
-            console.log(field[2][3][2]);
-            console.log(field[2][4][2]);
             for ( var i = 0; i < field.length; i++){
                 for ( var j = 0; j < field[0].length; j++){
                     var counter = 0;
-                    
+
                     var iPlus = i;
                     iPlus = ++iPlus;
                     var iMinus = i;
@@ -37,25 +33,22 @@ var Controller = function (view, model) {
                     if(i == 0 || j == 0 || i == len || j == len){                        
                     }
                     else{
-                        counter = counter + field[i][jPlus][3];
-                        counter = counter + field[i][jMinus][3];
-                        counter = counter + field[iPlus][j][3];
-                        counter = counter + field[iMinus][j][3];
-                        counter = counter + field[iPlus][jPlus][3];
-                        counter = counter + field[iPlus][jMinus][3];
-                        counter = counter + field[iMinus][jPlus][3];
-                        counter = counter + field[iMinus][jMinus][3];
-                        if(field[i][j][3]==1){
+                        counter = counter + field[i][jjPlus].status;
+                        counter = counter + field[i][jMinus].status;
+                        counter = counter + field[iPlus][j].status;
+                        counter = counter + field[iMinus][j].status;
+                        counter = counter + field[iPlus][jPlus].status;
+                        counter = counter + field[iPlus][jMinus].status;
+                        counter = counter + field[iMinus][jPlus].status;
+                        counter = counter + field[iMinus][jMinus].status;
+                        if(field[i][j].status==1){
                             if(counter < 2 || counter > 3){
-                                console.log('x: ' + field[i][j][0] + ' y:' + field[i][j][1] + ' counter:' + counter);
-                                newField[i][j][3]=0;
-                                newField[i][j][2]='dead';
+                                newField[i][j].status=0;
                             }
                         }
                         else{
                             if(counter == 3){
-                                newField[i][j][3]=1;
-                                newField[i][j][2]='live';
+                                newField[i][j].status=1;
                             }  
                         }
                     }                                       
