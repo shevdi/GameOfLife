@@ -15,10 +15,18 @@ Dot.prototype = {
             return 'dead';
     }
 };
+Dot.prototype = {
+    changeStatus : function() {
+        if(this.status==1)
+            return 'alive';
+        else
+            return 'dead';
+    }
+};
 
 var Model = function () {
     var field = new Array();
-    
+
     var notifyController = function () {    
         $('body').trigger('updateView');
     }
@@ -34,7 +42,6 @@ var Model = function () {
                     field[i].push(new Dot(i, j));              
                 }             
             }             
-            // console.log(field[2][2].isAlive());
             notifyController();
         },
 
@@ -43,18 +50,10 @@ var Model = function () {
             notifyController();
         },
 
-        dotStatus: function( row, col, status ){ 
-
+        dotStatus: function( dot ){ 
             // При смене цвета точки таблица не перерисовывается
-            if(field[row][col].status == 0){
-                field[row][col].status = 1;
-                $('#row' + row + '_col' + col).attr('class', 'alive');
-            }
-            else{
-                field[row][col].status = 0;
-                $('#row' + row + '_col' + col).attr('class', 'dead');
-            }
-            // notifyController();
+            console.log(dot);
+            field[dot.x][dot.y].status = dot.status;
         },
         
         getData: function(){           

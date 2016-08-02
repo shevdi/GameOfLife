@@ -4,11 +4,10 @@
  */
 
 var View = function () {
-    
+
 
 	var updateView = function ( field ) {	      
         $('#field tr').remove();
-        
         // Рисуются ряды в таблице, затем колонки. В id записан номер колонки и ряда.
         for( var i = 0; i < field.length; i++ ){
             $('#field').append( "<tr id='row_num"  + field[i][0].x + "'></tr>" );
@@ -49,7 +48,7 @@ var View = function () {
             var $dot = e.currentTarget;
             var event = jQuery.Event("changeStatus");
             event.id = $($dot).attr('id');
-            event.dot = $($dot).attr('class');
+            event.status = $($dot).attr('class');
             $('body').trigger(event);
         }); 
 
