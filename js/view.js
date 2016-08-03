@@ -44,11 +44,14 @@ var View = function () {
         });
 
         // изменить статус точки
-        $('td').live("click", function(e){             
+        $('td').live("click", function(e){     
+
             var $dot = e.currentTarget;
             var event = jQuery.Event("changeStatus");
             event.id = $($dot).attr('id');
             event.status = $($dot).attr('class');
+            console.log(event);     
+
             $('body').trigger(event);
         }); 
 

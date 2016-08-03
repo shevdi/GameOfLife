@@ -15,14 +15,7 @@ Dot.prototype = {
             return 'dead';
     }
 };
-Dot.prototype = {
-    changeStatus : function() {
-        if(this.status==1)
-            return 'alive';
-        else
-            return 'dead';
-    }
-};
+
 
 var Model = function () {
     var field = new Array();
@@ -52,7 +45,6 @@ var Model = function () {
 
         dotStatus: function( dot ){ 
             // При смене цвета точки таблица не перерисовывается
-            console.log(dot);
             field[dot.x][dot.y].status = dot.status;
         },
         

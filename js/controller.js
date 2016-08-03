@@ -26,7 +26,6 @@ var Controller = function (view, model) {
     });
 
     function changeDotStatus (e){
-        console.log(e);
         var splitId = e.id.split('_');
         e.row = splitId[0].substring(3);
         e.col = splitId[1].substring(3);
@@ -90,22 +89,7 @@ var Controller = function (view, model) {
     }
 
 	return  {
-         changeDotStatus: function (e){
-        console.log(e);
-        var splitId = e.id.split('_');
-        e.row = splitId[0].substring(3);
-        e.col = splitId[1].substring(3);
-        var dot = new Dot(e.row, e.col);
-        if(e.status == 'dead'){
-            dot.status = 1;
-            $('#' + e.id).attr('class', 'alive');
-        }
-        else{
-            dot.status = 0;
-            $('#' + e.id).attr('class', 'dead');
-        }
-        return dot;
-    }
+
             // public functions
 	};
 };
