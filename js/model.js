@@ -25,16 +25,16 @@ var Model = function () {
     }
     // public methods
     return  {
-        createField: function ( size ) {   
+        createField: function ( sizeX, sizeY ) {   
             field = []; 
-            for( var i = 0; i < size; i++ )
+            for( var i = 0; i < sizeX; i++ )
             {
                 field.push([]);   
-                for( var j = 0; j < size; j++ )
+                for( var j = 0; j < sizeY; j++ )
                 {
                     field[i].push(new Dot(i, j));              
                 }             
-            }             
+            }            
             notifyController();
         },
 

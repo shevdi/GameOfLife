@@ -6,15 +6,33 @@ var Controller = function (view, model) {
 
     var _view = view;
     var _model = model;
-    
+    var tick = null; 
+
     // event binding
     $('body').bind('createField', function(e) {             
-        _model.createField( e.size );
+        _model.createField( e.sizeX, e.sizeY );
     });
 
-    $('body').bind('changeState', function(e) { 
+    $('body').bind('changeState', function(e) {  
         var newField = countField( _model.getData());  
         _model.fieldState( newField );
+    });
+
+    $('body').bind('changeStateAuto', function(e) {  
+        var sw = $('#startButton').html(); 
+        if(e.state == 'start'){        
+            $('#startButton').html('stop'); 
+            tick = setInterval(changeField, 2000);                
+        }
+        else if(e.state = 'stop'){
+            $('#startButton').html('start');
+            clearInterval(tick);
+        }   
+
+        function changeField(){
+            var newField = countField( _model.getData());  
+            _model.fieldState( newField );
+        } 
     });
 
     $('body').bind('changeStatus', function(e) {        
@@ -42,10 +60,11 @@ var Controller = function (view, model) {
     }
 
     function countField (field){
-        var newField = JSON.parse(JSON.stringify( field ));
-        
-        var len = field.length;
-        len = --len;
+        var newField = JSON.parse(JSON.stringify( field ));        
+        var lenX = field.length;
+        lenX = --lenX;
+        var lenY = field[0].length;
+        lenY = --lenY;
         for ( var i = 0; i < field.length; i++){
             for ( var j = 0; j < field[0].length; j++){
                 var counter = 0;
@@ -59,7 +78,7 @@ var Controller = function (view, model) {
                 var jMinus = j;
                 jMinus = --jMinus;
 
-                if(i == 0 || j == 0 || i == len || j == len){
+                if(i == 0 || j == 0 || i == lenX || j == lenY){
                 }
 
                 else{
@@ -70,8 +89,7 @@ var Controller = function (view, model) {
                     counter = counter + field[iPlus][jMinus].status;
                     counter = counter + field[iPlus][jPlus].status;
                     counter = counter + field[iMinus][jPlus].status;
-                    counter = counter + field[iMinus][jMinus].status;         
-                                            
+                    counter = counter + field[iMinus][jMinus].status;                           
                 }
                 if(field[i][j].status==1){
                     if(counter < 2 || counter > 3){
@@ -85,6 +103,7 @@ var Controller = function (view, model) {
                 }
             }
         }
+
         return newField;
     }
 
