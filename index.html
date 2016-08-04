@@ -7,18 +7,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.css"> 
 </head>
 <body style="margin: 0; padding: 0;">    
-    <div  style="margin: 20px;">
+    <div  class="header">
     <h1>Game of Life</h1>
-        <fieldset>
-            <label for="size">field size</label>
-            <input type="number" id="sizeY" min="10" max="70" />
-            <input type="number" id="sizeX" min="10" max="70" />
-            <button id="createButton">create</button>
-            <button id="nextButton">next</button>   
-            <button id="startButton">start</button>         
-        </fieldset>   
-        <table id="field"></table> 
-    </div>
+    <fieldset>
+        <!-- <label for="size">field size</label> -->
+        <input type="number" id="sizeY" min="10" max="70" />
+        <input type="number" id="sizeX" min="10" max="70" />
+        <button id="createButton">create</button>
+        <button id="nextButton">next</button>   
+        <button id="startButton">start</button>      
+    </fieldset>    
+    </div>    
+    <table id="field"></table>
     <div id="mocha" style="float:right"></div>
 <script src="js/jquery-1.7.1.min.js"></script>
 <script src="js/view.js"></script>

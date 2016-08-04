@@ -35,7 +35,10 @@ var View = function () {
         $("#createButton").on("click", function(){
             var event = jQuery.Event("createField");
             event.sizeX = parseInt($('#sizeX')[0].value)+2;  
-            event.sizeY = parseInt($('#sizeY')[0].value)+2;          
+            event.sizeY = parseInt($('#sizeY')[0].value)+2;  
+            $('#nextButton').css('display', 'inline');
+            $('#startButton').css('display', 'inline');
+            $('#speed').css('display', 'inline');
             $('body').trigger(event);          
         });
 
@@ -45,6 +48,10 @@ var View = function () {
                 var event = jQuery.Event("createField");
                 event.sizeX = parseInt($('#sizeX')[0].value)+2;  
                 event.sizeY = parseInt($('#sizeY')[0].value)+2;      
+                $('#nextButton').css('display', 'inline');
+                $('#startButton').css('display', 'inline');
+                $('#speed').css('display', 'inline');
+                $('body').trigger(event);  
             }
         });
 

@@ -1,11 +1,38 @@
 body{
 	font-size:20px;
-	text-align:center;
-	font-family: Quicksand;
+	text-align:center;	
+	font-family: merriweatherSans;
+	background-color: #000500;
+	padding:0px;
+	color:#9E1024;
+}
+
+h1{
+	margin:0px;
+	padding-top: 20px;
+	padding-bottom: 10px;
+	text-shadow: 2px 2px 1px #ffb029;
+}
+
+.header{
+    background: #405040; 
+    background: -webkit-linear-gradient(#405040, #405240);
+    background: -o-linear-gradient(#405040, #405240); 
+    background: -moz-linear-gradient(#405040, #405240); 
+    background: linear-gradient(#405040, #405240); 
+    border-bottom:2px solid #9E1024;
+}
+
+fieldset{
+	width:500px;
+	margin:0 auto;
+	margin-bottom:20px;
+	border:none;
 }
 
 table{
 	margin: 0 auto;
+	margin-top: 30px;
 }
 td{
 	height:10px;
@@ -23,8 +50,9 @@ td.dead{
 
 input[type="number"]{
 	width:50px;
-	font-size: 20px;
-	height:20px;
+	font-size: 20px;	
+	background-color:#ddd;
+	color:#9E1024;
 }
 
 label{
@@ -33,14 +61,57 @@ label{
 
 button{
 	width:80px;
-	height:32px;
 	font-size:21px;
-	padding-bottom:29px;
-	/*font-family: hemi_head;*/
+	padding-bottom:3px;
+	border-radius: 3px;
+	color:#9E1024;
+	background-color:#aaaaaa;
 }
 
-fieldset{
-	width:500px;
-	margin:0 auto;
-	margin-bottom:20px;
+button:hover{
+	cursor:pointer;
 }
+
+#nextButton, #startButton{
+	display: none;
+}
+
+#speed{
+	width:50px;
+	vertical-align: sub;
+	display: none;
+}
+
+
+@font-face {
+    font-family: merriweatherSans;
+    font-style: normal;
+    font-weight: normal;
+    src: local('merriweatherSans'),
+    	url('fonts/merriweather-sans/MerriweatherSans-Regular.otf') format('otf'),
+     	url('fonts/merriweather-sans/MerriweatherSans-Regular.woff') format('woff'),
+    	url('fonts/merriweather-sans/MerriweatherSans-Regular.svg') format('svg');
+}
+
+@font-face {
+    font-family: merriweatherSans;
+    font-style: normal;
+    font-weight: bold;
+    src: local('merriweatherSans'),
+    	url('fonts/merriweather-sans/MerriweatherSans-ExtraBold.otf') format('otf'),
+    	url('fonts/merriweather-sans/MerriweatherSans-ExtraBold.ttf') format('ttf'),
+    	url('fonts/merriweather-sans/MerriweatherSans-ExtraBold.woff') format('woff'),
+    	url('fonts/merriweather-sans/MerriweatherSans-ExtraBold.svg') format('svg');
+}
+
+@font-face {
+    font-family: merriweatherSans;
+    font-style: normal;
+    font-weight: lighter;
+    src: local('merriweatherSans'),
+    	url('fonts/merriweather-sans/MerriweatherSans-Light.otf') format('otf'),
+    	url('fonts/merriweather-sans/MerriweatherSans-Light.ttf') format('ttf'),
+    	url('fonts/merriweather-sans/MerriweatherSans-Light.woff') format('woff'),
+    	url('fonts/merriweather-sans/MerriweatherSans-Light.svg') format('svg');
+}
+
