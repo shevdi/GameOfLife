@@ -21,11 +21,9 @@ var Controller = function (view, model) {
     $('body').bind('changeStateAuto', function(e) {  
         var sw = $('#startButton').html(); 
         if(e.state == 'start'){        
-            $('#startButton').html('stop'); 
-            tick = setInterval(changeField, 2000);                
+            tick = setInterval(changeField, e.speed+00);                
         }
         else if(e.state = 'stop'){
-            $('#startButton').html('start');
             clearInterval(tick);
         }   
 
@@ -50,11 +48,11 @@ var Controller = function (view, model) {
         var dot = new Dot(e.row, e.col);
         if(e.status == 'dead'){
             dot.status = 1;
-            $('#' + e.id).attr('class', 'alive');
+            $('#' + e.id).prop('class', 'alive');
         }
         else{
             dot.status = 0;
-            $('#' + e.id).attr('class', 'dead');
+            $('#' + e.id).prop('class', 'dead');
         }
         return dot;
     }
@@ -108,8 +106,14 @@ var Controller = function (view, model) {
     }
 
 	return  {
+        // public functions
+        changeDotStatusForTesting: function (e) {
+            return(changeDotStatus(e));
+        },
 
-            // public functions
+        countFieldForTesting: function (field) {
+            return(countField(field));
+        }
 	};
 };
 

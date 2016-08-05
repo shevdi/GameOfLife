@@ -26,7 +26,7 @@ var Model = function () {
     // public methods
     return  {
         createField: function ( sizeX, sizeY ) {   
-            field = []; 
+            field = [];     
             for( var i = 0; i < sizeX; i++ )
             {
                 field.push([]);   
@@ -34,7 +34,20 @@ var Model = function () {
                 {
                     field[i].push(new Dot(i, j));              
                 }             
-            }            
+            }  
+            
+            if($('#randomFill').is(':checked')){
+                for( var i = 0; i < sizeX; i++ )
+                { 
+                    for( var j = 0; j < sizeY; j++ )
+                    {
+                        var random = Math.floor((Math.random() * 100) + 1); 
+                        if(random > 80){
+                            field[i][j].status = 1;
+                        }
+                    }             
+                } 
+            }                    
             notifyController();
         },
 

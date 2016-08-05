@@ -7,6 +7,15 @@ body{
 	color:#9E1024;
 }
 
+#mocha{
+	color:white;
+	text-shadow: none;
+}
+
+#mocha h1{
+	text-shadow: none;
+}
+
 h1{
 	margin:0px;
 	padding-top: 20px;
@@ -48,11 +57,17 @@ td.dead{
 	background: #D9D9D9;
 }
 
+
+
 input[type="number"]{
 	width:50px;
 	font-size: 20px;	
 	background-color:#ddd;
 	color:#9E1024;
+}
+
+input[type="checkbox"]{
+	transform: scale(1.5);
 }
 
 label{

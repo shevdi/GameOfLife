@@ -4,8 +4,6 @@
  */
 
 var View = function () {
-
-
 	var updateView = function ( field ) {
         $('#field tr').remove();
         // Рисуются ряды в таблице, затем колонки. В id записан номер колонки и ряда.
@@ -59,8 +57,8 @@ var View = function () {
         $('td').live("click", function(e){
             var $dot = e.currentTarget;
             var event = jQuery.Event("changeStatus");
-            event.id = $($dot).attr('id');
-            event.status = $($dot).attr('class');
+            event.id = $($dot).prop('id');
+            event.status = $($dot).prop('class');
             $('body').trigger(event);
         }); 
 
@@ -76,13 +74,27 @@ var View = function () {
             var sw = $('#startButton').html(); 
             if(sw == 'start'){        
                 $('#startButton').html('stop'); 
-                event.state = 'start';                               
+                event.state = 'start'; 
+                event.speed = $('#speed').val();
             }
             else{
                 $('#startButton').html('start');
                 event.state = 'stop';                
             }  
             $('body').trigger(event); 
+        }); 
+
+        // dynamic speed change
+        $('#speed').on("change", function(){   
+            var event = jQuery.Event("changeStateAuto");
+            var sw = $('#startButton').html(); 
+            if(sw == 'stop'){        
+                event.state = 'stop'; 
+                $('body').trigger(event);
+                event.state = 'start'; 
+                event.speed = ($('#speed').val())*500;
+                $('body').trigger(event);
+            }
         }); 
     };
     initView();
