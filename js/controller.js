@@ -8,6 +8,75 @@ var Controller = function (view, model) {
     var _model = model;
     var tick = null; 
 
+    //set the handlers for the view
+    var initView = function(){
+        // create field
+        $("#createButton").on("click", function(){
+            var $event = jQuery.Event("createField");
+            $event.sizeX = parseInt($('#sizeX')[0].value)+2;  
+            $event.sizeY = parseInt($('#sizeY')[0].value)+2;  
+            $('#nextButton, #startButton, #speed').css('display', 'inline');
+            $('body').trigger($event);          
+        });
+
+        // create field on enter
+        $('#createButton').on("keypress", function(e){
+            if(e.which == 13){
+                var $event = jQuery.Event("createField");
+                $event.sizeX = parseInt($('#sizeX')[0].value)+2;  
+                $event.sizeY = parseInt($('#sizeY')[0].value)+2;      
+                $('#nextButton, #startButton, #speed').css('display', 'inline');
+                $('body').trigger($event);  
+            }
+        });
+
+        // change cell status
+        $('td').live("click", function(e){
+            var cell = e.currentTarget;
+            var $event = jQuery.Event("changeStatus");
+            $event.id = $(cell).prop('id');
+            $event.status = $(cell).prop('class');
+            $('body').trigger($event);
+        }); 
+
+        // next step
+        $('#nextButton').on("click", function(){
+            var $event = jQuery.Event("changeState");
+            $('body').trigger($event);
+        }); 
+
+        // start auto step
+        $('#startButton').on("click", function(){   
+            var $event = jQuery.Event("changeStateAuto");
+            var $sw = $('#startButton').html(); 
+            if(_model.gameStatus() === false){     
+                _model.gameStart();   
+                $('#startButton').html('stop'); 
+                $event.state = 'start'; 
+                $event.speed = $('#speed').val();
+            }
+            else{
+                 _model.gameStop();  
+                $('#startButton').html('start');
+                $event.state = 'stop';                
+            }  
+            $('body').trigger($event); 
+        }); 
+
+        // dynamic speed change
+        $('#speed').on("change", function(){   
+            var $event = jQuery.Event("changeStateAuto");
+            if(_model.gameStatus() === true){        
+                $event.state = 'stop'; 
+                $('body').trigger($event);
+                $event.state = 'start'; 
+                $event.speed = ($('#speed').val())*500;
+                $('body').trigger($event);
+            }
+        }); 
+    };
+    initView();
+
     // event binding
     $('body').bind('createField', function(e) {             
         _model.createField( e.sizeX, e.sizeY );
@@ -34,39 +103,43 @@ var Controller = function (view, model) {
     });
 
     $('body').bind('changeStatus', function(e) {        
-        _model.dotStatus( changeDotStatus (e) );
+        _model.cellStatus( changeCellStatus (e) );
     });
 
     $('body').bind('updateView', function(e) {         
         _view.updateView( _model.getData() );
     });
 
-    function changeDotStatus (e){
+    function changeCellStatus (e){
         var splitId = e.id.split('_');
         e.row = splitId[0].substring(3);
         e.col = splitId[1].substring(3);
-        var dot = new Dot(e.row, e.col);
+        var cell = new Cell(e.row, e.col);
         if(e.status == 'dead'){
-            dot.status = 1;
+            cell.status = 1;
             $('#' + e.id).prop('class', 'alive');
         }
         else{
-            dot.status = 0;
+            cell.status = 0;
             $('#' + e.id).prop('class', 'dead');
         }
-        return dot;
+        return cell;
     }
 
     function countField (field){
-        var newField = JSON.parse(JSON.stringify( field ));        
+        var newField = JSON.parse(JSON.stringify( field ));  
+        // var newField = $.extend( true, [], field);   
+        // console.log(newField);   
+        // console.log(newField2);  
         var lenX = field.length;
         lenX = --lenX;
         var lenY = field[0].length;
         lenY = --lenY;
         for ( var i = 0; i < field.length; i++){
             for ( var j = 0; j < field[0].length; j++){
-                var counter = 0;
 
+                var counter = 0;
+                console.log('x: ' + newField[i][j].x + ' y: ' + newField[i][j].y +' status: ' + newField[i][j].status);
                 var iPlus = i;
                 iPlus = ++iPlus;
                 var iMinus = i;
@@ -107,8 +180,8 @@ var Controller = function (view, model) {
 
 	return  {
         // public functions
-        changeDotStatusForTesting: function (e) {
-            return(changeDotStatus(e));
+        changeCellStatusForTesting: function (e) {
+            return(changeCellStatus(e));
         },
 
         countFieldForTesting: function (field) {

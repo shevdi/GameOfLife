@@ -2,23 +2,27 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-var Dot = function(x, y){
+var Cell = function(x, y){
     this.x = x;
     this.y = y;
     this.status = 0;
 }
-Dot.prototype = {
-    isAlive : function() {
+Cell.prototype = {
+    isAlive: function() {
         if(this.status==1)
             return 'alive';
         else
             return 'dead';
+    },
+    changeStatus: function() {
+
     }
 };
 
 
 var Model = function () {
     var field = new Array();
+    var game = false;
 
     var notifyController = function () {    
         $('body').trigger('updateView');
@@ -32,7 +36,7 @@ var Model = function () {
                 field.push([]);   
                 for( var j = 0; j < sizeY; j++ )
                 {
-                    field[i].push(new Dot(i, j));              
+                    field[i].push(new Cell(i, j));              
                 }             
             }  
             
@@ -56,14 +60,31 @@ var Model = function () {
             notifyController();
         },
 
-        dotStatus: function( dot ){ 
+        cellStatus: function( cell ){ 
             // При смене цвета точки таблица не перерисовывается
-            field[dot.x][dot.y].status = dot.status;
+            field[cell.x][cell.y].status = cell.status;
         },
         
         getData: function(){           
             return field;
-        }
+        },
+
+        gameStatus: function(){ 
+            if(game == true){
+                return true;
+            }    
+            else{
+                return false;
+            }    
+        },
+
+        gameStart: function(){ 
+            game = true; 
+        },
+
+        gameStop: function(){ 
+            game = false; 
+        },
     };
 };
 

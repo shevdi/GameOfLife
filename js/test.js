@@ -35,14 +35,14 @@ describe("GameOfLife", function(){
         });
     });
 
-    describe("Dot status", function() {
-        it("changes dot status", function() {
+    describe("Cell status", function() {        
+        it("changes cell status", function() {
             for ( var i = 0; i < field.length; i++){
                 for ( var j = 0; j < field[0].length; j++){
-                    var dot = controller.changeDotStatusForTesting( { id: "row" + i + "_col" + j, status: "dead" } );
-                    assert.equal(dot.x, i);
-                    assert.equal(dot.y, j);
-                    assert.equal(dot.status, 1);                  
+                    var cell = controller.changeCellStatusForTesting( { id: "row" + i + "_col" + j, status: "dead" } );
+                    assert.equal(cell.x, i);
+                    assert.equal(cell.y, j);
+                    assert.equal(cell.status, 1);                  
                 }
             }            
         });
@@ -53,7 +53,7 @@ describe("GameOfLife", function(){
         it("compares counted field with right answer", function() {
             var alive_newField = JSON.parse(JSON.stringify( field ));
 
-            // dots for testing before processing
+            // cells for testing before processing
             field[1][1].status = 1; 
             field[1][2].status = 1;
             field[1][3].status = 1;
@@ -84,7 +84,7 @@ describe("GameOfLife", function(){
             alive_newField[10][13].status = 1;
             alive_newField[11][12].status = 1;   
 
-            // to see position of wrong dot uncomment console.log
+            // to see position of wrong cell uncomment console.log
             for ( var i = 0; i < newField.length; i++){
                 for ( var j = 0; j < newField[0].length; j++){
                     // console.log('x=' + i + ' y=' + j );
