@@ -1,35 +1,13 @@
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-var Cell = function(x, y){
-    this.x = x;
-    this.y = y;
-    this.status = 0;
-}
-Cell.prototype = {
-    isAlive: function() {
-        if(this.status==1)
-            return 'alive';
-        else
-            return 'dead';
-    },
-    changeStatus: function() {
-
-    }
-};
-
-
 var Model = function () {
     var field = new Array();
     var game = false;
 
-    var notifyController = function () {    
+    var _notifyController = function () {    
         $('body').trigger('updateView');
     }
     // public methods
     return  {
-        createField: function ( sizeX, sizeY ) {   
+        createField: function ( sizeX, sizeY, randomFill ) {   
             field = [];     
             for( var i = 0; i < sizeX; i++ )
             {
@@ -40,29 +18,29 @@ var Model = function () {
                 }             
             }  
             
-            if($('#randomFill').is(':checked')){
+            if(randomFill===true){
                 for( var i = 0; i < sizeX; i++ )
                 { 
                     for( var j = 0; j < sizeY; j++ )
                     {
                         var random = Math.floor((Math.random() * 100) + 1); 
                         if(random > 80){
-                            field[i][j].status = 1;
+                            field[i][j].changeStatus('alive');
                         }
                     }             
                 } 
             }                    
-            notifyController();
+            _notifyController();
         },
 
         fieldState: function ( _field ) {   
             field = _field;  
-            notifyController();
+            _notifyController();
         },
 
         cellStatus: function( cell ){ 
             // При смене цвета точки таблица не перерисовывается
-            field[cell.x][cell.y].status = cell.status;
+            field[cell.x][cell.y].changeStatus(cell.status);
         },
         
         getData: function(){           

@@ -14,8 +14,8 @@ describe("GameOfLife", function(){
     });
 
     after(function() {
-    	model.createField(0, 0);
-    	$('body').trigger('updateView');
+        model.createField(0, 0);
+        $('body').trigger('updateView');
     });
 
     describe("creating field", function() {
