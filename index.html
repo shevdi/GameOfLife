@@ -8,7 +8,7 @@
     <meta name="author" content="Dmitry Shevelev">
     <link rel="shortcut icon" href="myfavicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.css"> 
+    <link rel="stylesheet" href="vendors/css/mocha-2.3.4.css"> 
 </head>
 <body>    
     <div class="header">
@@ -23,17 +23,17 @@
             <input type="range" id="speed" min="1" max="10" tabindex="7" />   
         </fieldset>    
     </div>    
-    <table id="field"></table>
-    <div id="mocha" style="float:right"></div>
-<script src="js/jquery-1.7.1.min.js"></script>
+    <table id="field" class="field"></table>
+    <div id="mocha"></div>
+<script src="vendors/jquery-1.7.1.min.js"></script>
+<script src="vendors/mocha-2.3.4.js"></script>
+<script src="vendors/chai.js"></script>
 <script src="js/view.js"></script>
 <script src="js/controller.js"></script>
 <script src="js/model.js"></script>
 <script src="js/cell.js"></script>
 <script src="js/app.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.js"></script>
 <script>mocha.setup('bdd');</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chai/2.0.0/chai.js"></script>
 <script src="js/test.js"></script>
 <script>mocha.run();</script>
 </body>

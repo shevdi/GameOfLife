@@ -1,5 +1,5 @@
 var Model = function () {
-    var field = new Array();
+    var field = [];
     var game = false;
 
     var _notifyController = function () {    

@@ -22,5 +22,5 @@ var Cell = function(x, y){
             else
                 this.status=0;
         }
-    }    
+    }  
 }

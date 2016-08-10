@@ -130,10 +130,7 @@ var Controller = function (view, model) {
     function _countField (field){
         var newField = [];   
         var lenX = field.length;
-        lenX = --lenX;
         var lenY = field[0].length;
-        lenY = --lenY;
-
 
         for ( var i = 0; i < field.length; i++){
             newField.push([]); 
@@ -141,11 +138,18 @@ var Controller = function (view, model) {
                 var counter = 0;
                 newField[i].push($.extend(true, [], field[i][j]));                
 
-                if(i == 0 || j == 0 || i == lenX || j == lenY){
+                // Cells on borders are hidden and not counted
+                if(i == 0 || j == 0 || i == minus(lenX) || j == minus(lenY)){
                 }
-
                 else{
-                    var counter = _countPoints();   
+                    counter = counter + field[i][plus(j)].status;
+                    counter = counter + field[i][minus(j)].status;
+                    counter = counter + field[minus(i)][j].status;
+                    counter = counter + field[plus(i)][j].status;
+                    counter = counter + field[plus(i)][minus(j)].status;
+                    counter = counter + field[plus(i)][plus(j)].status;
+                    counter = counter + field[minus(i)][plus(j)].status;
+                    counter = counter + field[minus(i)][minus(j)].status;  
                 }
                 if(field[i][j].isAlive() == 'alive'){
                     if(counter < 2 || counter > 3){
@@ -159,29 +163,19 @@ var Controller = function (view, model) {
                 }
             }
         }
-
-        function _countPoints(){
-            var iPlus = i;
-            iPlus = ++iPlus;
-            var iMinus = i;
-            iMinus = --iMinus;
-            var jPlus = j;
-            jPlus = ++jPlus;
-            var jMinus = j;
-            jMinus = --jMinus;
-            counter = counter + field[i][jPlus].status;
-            counter = counter + field[i][jMinus].status;
-            counter = counter + field[iMinus][j].status;
-            counter = counter + field[iPlus][j].status;
-            counter = counter + field[iPlus][jMinus].status;
-            counter = counter + field[iPlus][jPlus].status;
-            counter = counter + field[iMinus][jPlus].status;
-            counter = counter + field[iMinus][jMinus].status;   
-
-            return counter;
-        }
-
         return newField;
+    }
+
+    function plus(number){
+        var num = number;
+        num++;
+        return num;
+    }
+
+    function minus(number){
+        var num = number;
+        num--;
+        return num;
     }
 
     return  {
