@@ -139,9 +139,7 @@ var Controller = function (view, model) {
                 newField[i].push($.extend(true, [], field[i][j]));                
 
                 // Cells on borders are hidden and not counted
-                if(i == 0 || j == 0 || i == minus(lenX) || j == minus(lenY)){
-                }
-                else{
+                if(i != 0 && j != 0 && i != minus(lenX) && j != minus(lenY)){                
                     counter = counter + field[i][plus(j)].status;
                     counter = counter + field[i][minus(j)].status;
                     counter = counter + field[minus(i)][j].status;
@@ -190,7 +188,7 @@ var Controller = function (view, model) {
     };
 };
 
-
+module.exports = Controller;
 
 
 

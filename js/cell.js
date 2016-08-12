@@ -24,3 +24,5 @@ var Cell = function(x, y){
         }
     }  
 }
+
+module.exports = Cell;
