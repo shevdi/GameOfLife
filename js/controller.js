@@ -91,7 +91,7 @@ var Controller = function (view, model) {
     $('body').bind('changeStateAuto', function(e) {  
         var sw = $('#startButton').html(); 
         if(e.state == 'start'){        
-            tick = setInterval(changeField, e.speed+00);                
+            tick = setInterval(changeField, Number(e.speed)*100);                
         }
         else if(e.state = 'stop'){
             clearInterval(tick);
@@ -187,8 +187,6 @@ var Controller = function (view, model) {
         }
     };
 };
-
-module.exports = Controller;
 
 
 
