@@ -1,3 +1,7 @@
+var Cell = require("./cell.js");
+var Model = require("./model.js");
+var View = require("./view.js");
+
 var Controller = function (view, model) {
     var _view = view;
     var _model = model;
@@ -32,7 +36,7 @@ var Controller = function (view, model) {
         });
 
         // change cell status
-        $('td').live("click", function(e){
+        $('table').on("click", 'td', function(e){
             var cell = e.currentTarget;
             var $event = jQuery.Event("changeStatus");
             $event.id = $(cell).prop('id');
@@ -115,7 +119,7 @@ var Controller = function (view, model) {
         var splitId = e.id.split('_');
         e.row = splitId[0].substring(3);
         e.col = splitId[1].substring(3);
-        var cell = new Cell(e.row, e.col);
+        var cell = Cell.create(e.row, e.col);
         if(e.status == 'dead'){
             cell.changeStatus('alive');
             $('#' + e.id).prop('class', 'alive');
@@ -188,5 +192,5 @@ var Controller = function (view, model) {
     };
 };
 
-
+module.exports = Controller(View, Model);
 

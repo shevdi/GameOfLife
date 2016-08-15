@@ -4,10 +4,9 @@
   "description": "Conway's game of Life",
   "main": "./js/app.js",
   "scripts": {
-    "build": "babel js -d build"
-  },
-  "scripts": {
-    "build": "babel --preset es2015 js -d build"
+    "build": "webpack",
+    "start": "static &",
+    "test": "mocha --compilers js:babel-register"
   },
   "repository": {
     "type": "git",
@@ -20,7 +19,15 @@
   },
   "homepage": "https://github.com/shevdi/GameOfLife#readme",
   "devDependencies": {
-    "babel-cli": "^6.11.4",
-    "babel-preset-es2015": "^6.13.2"
+    "babel-core": "^6.13.2",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.13.2",
+    "babel-register": "^6.11.6",
+    "chai": "^3.5.0",
+    "file-loader": "^0.9.0",
+    "imports-loader": "^0.6.5",
+    "jquery": "^3.1.0",
+    "mocha": "^3.0.2",
+    "webpack": "^1.13.1"
   }
 }

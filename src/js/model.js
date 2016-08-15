@@ -1,3 +1,5 @@
+var Cell = require("./cell.js");
+
 var Model = function () {
     var field = [];
     var game = false;
@@ -14,7 +16,7 @@ var Model = function () {
                 field.push([]);   
                 for( var j = 0; j < sizeY; j++ )
                 {
-                    field[i].push(new Cell(i, j));              
+                    field[i].push(Cell.create(i, j));              
                 }             
             }  
             
@@ -66,6 +68,8 @@ var Model = function () {
     };
 };
 
+
+module.exports = Model();
 
 
 

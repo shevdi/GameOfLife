@@ -68,7 +68,7 @@ describe("GameOfLife", function(){
             field[9][13].status = 1;
             field[8][12].status = 1;
 
-            newField = controller.countFieldForTesting(field);  
+            var newField = controller.countFieldForTesting(field);  
 
             // right answer
             alive_newField[1][2].status = 1;    

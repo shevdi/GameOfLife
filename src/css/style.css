@@ -105,7 +105,7 @@ input[type="range"]{
     font-weight: normal;
     src: local('merriweatherSans'),
     	url('fonts/merriweather-sans/MerriweatherSans-Regular.otf') format('otf'),
-     	url('fonts/merriweather-sans/MerriweatherSans-Regular.woff') format('woff'),
+    	url('fonts/merriweather-sans/MerriweatherSans-Regular.ttf') format('ttf'),
     	url('fonts/merriweather-sans/MerriweatherSans-Regular.svg') format('svg');
 }
 
@@ -116,7 +116,6 @@ input[type="range"]{
     src: local('merriweatherSans'),
     	url('fonts/merriweather-sans/MerriweatherSans-ExtraBold.otf') format('otf'),
     	url('fonts/merriweather-sans/MerriweatherSans-ExtraBold.ttf') format('ttf'),
-    	url('fonts/merriweather-sans/MerriweatherSans-ExtraBold.woff') format('woff'),
     	url('fonts/merriweather-sans/MerriweatherSans-ExtraBold.svg') format('svg');
 }
 
@@ -127,7 +126,6 @@ input[type="range"]{
     src: local('merriweatherSans'),
     	url('fonts/merriweather-sans/MerriweatherSans-Light.otf') format('otf'),
     	url('fonts/merriweather-sans/MerriweatherSans-Light.ttf') format('ttf'),
-    	url('fonts/merriweather-sans/MerriweatherSans-Light.woff') format('woff'),
     	url('fonts/merriweather-sans/MerriweatherSans-Light.svg') format('svg');
 }
 
