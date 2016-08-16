@@ -1,6 +1,6 @@
 import Cell from "./cell.js";
 
-export function View() {
+export default function(){
     var _updateView = function ( field ) {
         $('#field tr').remove();
         var fragment = document.createDocumentFragment();
@@ -34,4 +34,4 @@ export function View() {
             _updateView(field);
         }
     };
-};
+}

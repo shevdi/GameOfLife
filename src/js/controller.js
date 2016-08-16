@@ -2,7 +2,7 @@ import Cell from "./cell.js";
 import Model from "./model.js";
 import View from "./view.js";
 
-export function Controller(view, model) {
+export default function(view, model) {
     var _view = view;
     var _model = model;
     var tick = null; 
@@ -119,7 +119,7 @@ export function Controller(view, model) {
         var splitId = e.id.split('_');
         e.row = splitId[0].substring(3);
         e.col = splitId[1].substring(3);
-        var cell = Cell.create(e.row, e.col);
+        var cell = new Cell(e.row, e.col);
         if(e.status == 'dead'){
             cell.changeStatus('alive');
             $('#' + e.id).prop('class', 'alive');
@@ -190,5 +190,4 @@ export function Controller(view, model) {
             return(_countField(field));
         }
     };
-};
-
+}

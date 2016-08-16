@@ -54,7 +54,7 @@
 
 	var _model2 = _interopRequireDefault(_model);
 
-	var _view = __webpack_require__(3);
+	var _view = __webpack_require__(4);
 
 	var _view2 = _interopRequireDefault(_view);
 
@@ -70,7 +70,7 @@
 	//init
 	var model = new _model2.default();
 	var view = new _view2.default();
-	var controller = new _controller2.default();
+	var controller = new _controller2.default(view, model);
 
 
 /***/ },
@@ -10171,15 +10171,8 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.Model = Model;
 
-	var _model = __webpack_require__(2);
-
-	var _model2 = _interopRequireDefault(_model);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function Model() {
+	exports.default = function () {
 	    var field = [];
 	    var game = false;
 
@@ -10193,7 +10186,7 @@
 	            for (var i = 0; i < sizeX; i++) {
 	                field.push([]);
 	                for (var j = 0; j < sizeY; j++) {
-	                    field[i].push(_model2.default.create(i, j));
+	                    field[i].push(new _cell2.default(i, j));
 	                }
 	            }
 
@@ -10242,9 +10235,49 @@
 	    };
 	};
 
+	var _cell = __webpack_require__(3);
+
+	var _cell2 = _interopRequireDefault(_cell);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 
 /***/ },
 /* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*** IMPORTS FROM imports-loader ***/
+	var $ = __webpack_require__(1);
+	var jQuery = __webpack_require__(1);
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function (x, y) {
+	    this.x = x;
+	    this.y = y;
+	    this.status = 0;
+
+	    this.isAlive = function () {
+	        if (this.status == 1) return 'alive';else return 'dead';
+	    }, this.changeStatus = function (_status) {
+
+	        if (_status == 'alive' || _status == 1 || _status == true) {
+	            this.status = 1;
+	        } else if (_status == 'dead' || _status == 0 || _status == false) {
+	            this.status = 0;
+	        } else {
+	            if (_status == 0) this.status = 1;else this.status = 0;
+	        }
+	    };
+	};
+
+
+/***/ },
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*** IMPORTS FROM imports-loader ***/
@@ -10256,15 +10289,8 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.View = View;
 
-	var _cell = __webpack_require__(4);
-
-	var _cell2 = _interopRequireDefault(_cell);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function View() {
+	exports.default = function () {
 	    var _updateView = function _updateView(field) {
 	        $('#field tr').remove();
 	        var fragment = document.createDocumentFragment();
@@ -10300,44 +10326,11 @@
 	    };
 	};
 
+	var _cell = __webpack_require__(3);
 
-/***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
+	var _cell2 = _interopRequireDefault(_cell);
 
-	/*** IMPORTS FROM imports-loader ***/
-	var $ = __webpack_require__(1);
-	var jQuery = __webpack_require__(1);
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.Cell = Cell;
-	function Cell() {
-	    this.x = x;
-	    this.y = y;
-	    this.status = 0;
-
-	    this.create = function (x, y) {
-	        this.x = x;
-	        this.y = y;
-	        this.status = 0;
-	        return this;
-	    }, this.isAlive = function () {
-	        if (this.status == 1) return 'alive';else return 'dead';
-	    }, this.changeStatus = function (_status) {
-
-	        if (_status == 'alive' || _status == 1 || _status == true) {
-	            this.status = 1;
-	        } else if (_status == 'dead' || _status == 0 || _status == false) {
-	            this.status = 0;
-	        } else {
-	            if (_status == 0) this.status = 1;else this.status = 0;
-	        }
-	    };
-	};
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 
 /***/ },
@@ -10353,23 +10346,8 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.Controller = Controller;
 
-	var _cell = __webpack_require__(4);
-
-	var _cell2 = _interopRequireDefault(_cell);
-
-	var _model2 = __webpack_require__(2);
-
-	var _model3 = _interopRequireDefault(_model2);
-
-	var _view2 = __webpack_require__(3);
-
-	var _view3 = _interopRequireDefault(_view2);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function Controller(view, model) {
+	exports.default = function (view, model) {
 	    var _view = view;
 	    var _model = model;
 	    var tick = null;
@@ -10484,7 +10462,7 @@
 	        var splitId = e.id.split('_');
 	        e.row = splitId[0].substring(3);
 	        e.col = splitId[1].substring(3);
-	        var cell = _cell2.default.create(e.row, e.col);
+	        var cell = new _cell2.default(e.row, e.col);
 	        if (e.status == 'dead') {
 	            cell.changeStatus('alive');
 	            $('#' + e.id).prop('class', 'alive');
@@ -10554,6 +10532,20 @@
 	        }
 	    };
 	};
+
+	var _cell = __webpack_require__(3);
+
+	var _cell2 = _interopRequireDefault(_cell);
+
+	var _model2 = __webpack_require__(2);
+
+	var _model3 = _interopRequireDefault(_model2);
+
+	var _view2 = __webpack_require__(4);
+
+	var _view3 = _interopRequireDefault(_view2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 
 /***/ },

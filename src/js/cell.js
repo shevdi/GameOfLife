@@ -1,14 +1,8 @@
-export function Cell(){
+export default function(x, y){
     this.x = x;
     this.y = y;
     this.status = 0;  
 
-    this.create = function(x, y) {
-        this.x = x;
-        this.y = y;
-        this.status = 0;  
-        return this;
-    }, 
     this.isAlive = function() {
         if(this.status==1)
             return 'alive';
@@ -30,4 +24,4 @@ export function Cell(){
                 this.status=0;
         }
     }  
-};
+}

@@ -1,6 +1,6 @@
-import Cell from "./model.js";
+import Cell from "./cell.js";
 
-export function Model() {
+export default function() {
     var field = [];
     var game = false;
 
@@ -16,7 +16,7 @@ export function Model() {
                 field.push([]);   
                 for( var j = 0; j < sizeY; j++ )
                 {
-                    field[i].push(Cell.create(i, j));              
+                    field[i].push(new Cell(i, j));              
                 }             
             }  
             
@@ -66,7 +66,7 @@ export function Model() {
             game = false; 
         },
     };
-};
+}
 
 
 
