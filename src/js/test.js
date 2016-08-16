@@ -1,12 +1,14 @@
+import Cell from "./cell.js";
+import Model from "./model.js";
+import View from "./view.js";
+import Controller from "./controller.js";
+require("mocha");
+require("chai");
+
 var expect = chai.expect;
 var assert = chai.assert;
 
-
-
 describe("GameOfLife", function(){
-
-
-
     beforeEach(function() {
         model.createField(15, 20);
         field = model.getData();

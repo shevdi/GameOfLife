@@ -1,8 +1,8 @@
-var Cell = require("./cell.js");
-var Model = require("./model.js");
-var View = require("./view.js");
+import Cell from "./cell.js";
+import Model from "./model.js";
+import View from "./view.js";
 
-var Controller = function (view, model) {
+export function Controller(view, model) {
     var _view = view;
     var _model = model;
     var tick = null; 
@@ -191,6 +191,4 @@ var Controller = function (view, model) {
         }
     };
 };
-
-module.exports = Controller(View, Model);
 

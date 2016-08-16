@@ -1,4 +1,6 @@
-var View = function () {
+import Cell from "./cell.js";
+
+export function View() {
     var _updateView = function ( field ) {
         $('#field tr').remove();
         var fragment = document.createDocumentFragment();
@@ -33,6 +35,3 @@ var View = function () {
         }
     };
 };
-
-
-module.exports = View();

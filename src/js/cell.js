@@ -1,7 +1,8 @@
-var Cell = function(x, y){
+export function Cell(){
     this.x = x;
     this.y = y;
-    this.status = 0;   
+    this.status = 0;  
+
     this.create = function(x, y) {
         this.x = x;
         this.y = y;
@@ -29,6 +30,4 @@ var Cell = function(x, y){
                 this.status=0;
         }
     }  
-}
-
-module.exports = new Cell();
+};

@@ -1,11 +1,12 @@
 require("../css/style.css");
-
-require("./cell.js");
+import Model from "./model.js";
+import View from "./view.js";
+import Controller from "./controller.js";
 
 //init
-var model = require("./model.js");
-var view = require("./view.js");
-var controller  = require("./controller.js");
+var model = new Model();
+var view = new View();
+var controller  = new Controller();
 
 
 

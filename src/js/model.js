@@ -1,6 +1,6 @@
-var Cell = require("./cell.js");
+import Cell from "./model.js";
 
-var Model = function () {
+export function Model() {
     var field = [];
     var game = false;
 
@@ -68,8 +68,6 @@ var Model = function () {
     };
 };
 
-
-module.exports = Model();
 
 
 

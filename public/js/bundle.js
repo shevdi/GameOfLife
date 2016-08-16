@@ -50,14 +50,27 @@
 
 	"use strict";
 
-	__webpack_require__(2);
+	var _model = __webpack_require__(2);
 
-	__webpack_require__(16);
+	var _model2 = _interopRequireDefault(_model);
+
+	var _view = __webpack_require__(3);
+
+	var _view2 = _interopRequireDefault(_view);
+
+	var _controller = __webpack_require__(5);
+
+	var _controller2 = _interopRequireDefault(_controller);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	__webpack_require__(6);
+
 
 	//init
-	var model = __webpack_require__(17);
-	var view = __webpack_require__(18);
-	var controller = __webpack_require__(19);
+	var model = new _model2.default();
+	var view = new _view2.default();
+	var controller = new _controller2.default();
 
 
 /***/ },
@@ -10149,13 +10162,411 @@
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/*** IMPORTS FROM imports-loader ***/
+	var $ = __webpack_require__(1);
+	var jQuery = __webpack_require__(1);
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.Model = Model;
+
+	var _model = __webpack_require__(2);
+
+	var _model2 = _interopRequireDefault(_model);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function Model() {
+	    var field = [];
+	    var game = false;
+
+	    var _notifyController = function _notifyController() {
+	        $('body').trigger('updateView');
+	    };
+	    // public methods
+	    return {
+	        createField: function createField(sizeX, sizeY, randomFill) {
+	            field = [];
+	            for (var i = 0; i < sizeX; i++) {
+	                field.push([]);
+	                for (var j = 0; j < sizeY; j++) {
+	                    field[i].push(_model2.default.create(i, j));
+	                }
+	            }
+
+	            if (randomFill === true) {
+	                for (var i = 0; i < sizeX; i++) {
+	                    for (var j = 0; j < sizeY; j++) {
+	                        var random = Math.floor(Math.random() * 100 + 1);
+	                        if (random > 80) {
+	                            field[i][j].changeStatus('alive');
+	                        }
+	                    }
+	                }
+	            }
+	            _notifyController();
+	        },
+
+	        fieldState: function fieldState(_field) {
+	            field = _field;
+	            _notifyController();
+	        },
+
+	        cellStatus: function cellStatus(cell) {
+	            // При смене цвета точки таблица не перерисовывается
+	            field[cell.x][cell.y].changeStatus(cell.status);
+	        },
+
+	        getData: function getData() {
+	            return field;
+	        },
+
+	        gameStatus: function gameStatus() {
+	            if (game == true) {
+	                return true;
+	            } else {
+	                return false;
+	            }
+	        },
+
+	        gameStart: function gameStart() {
+	            game = true;
+	        },
+
+	        gameStop: function gameStop() {
+	            game = false;
+	        }
+	    };
+	};
+
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*** IMPORTS FROM imports-loader ***/
+	var $ = __webpack_require__(1);
+	var jQuery = __webpack_require__(1);
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.View = View;
+
+	var _cell = __webpack_require__(4);
+
+	var _cell2 = _interopRequireDefault(_cell);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function View() {
+	    var _updateView = function _updateView(field) {
+	        $('#field tr').remove();
+	        var fragment = document.createDocumentFragment();
+	        // In table create rows and then columns. In id write number of column and row.
+	        for (var i = 0; i < field.length; i++) {
+	            var tr = document.createElement("tr");
+	            tr.setAttribute('id', 'row_num' + i);
+	            fragment.appendChild(tr);
+	            for (var j = 0; j < field[0].length; j++) {
+	                var id = 'row' + field[i][j].x + '_col' + field[i][j].y;
+	                var td = document.createElement("td");
+	                td.setAttribute('id', id);
+	                td.setAttribute('class', field[i][j].isAlive());
+	                tr.appendChild(td);
+	                fragment.appendChild(tr);
+	            }
+	        }
+	        $('#field').append(fragment);
+
+	        // Hide cells on borders
+	        $('#row_num0').css('display', 'none');
+	        $('#row_num' + (field.length - 1)).css('display', 'none');
+	        for (var i = 0; i < field.length; i++) {
+	            $('#row' + i + '_col0').css('display', 'none');
+	            $('#row' + i + '_col' + (field[0].length - 1)).css('display', 'none');
+	        }
+	    };
+
+	    return {
+	        updateView: function updateView(field) {
+	            _updateView(field);
+	        }
+	    };
+	};
+
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*** IMPORTS FROM imports-loader ***/
+	var $ = __webpack_require__(1);
+	var jQuery = __webpack_require__(1);
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.Cell = Cell;
+	function Cell() {
+	    this.x = x;
+	    this.y = y;
+	    this.status = 0;
+
+	    this.create = function (x, y) {
+	        this.x = x;
+	        this.y = y;
+	        this.status = 0;
+	        return this;
+	    }, this.isAlive = function () {
+	        if (this.status == 1) return 'alive';else return 'dead';
+	    }, this.changeStatus = function (_status) {
+
+	        if (_status == 'alive' || _status == 1 || _status == true) {
+	            this.status = 1;
+	        } else if (_status == 'dead' || _status == 0 || _status == false) {
+	            this.status = 0;
+	        } else {
+	            if (_status == 0) this.status = 1;else this.status = 0;
+	        }
+	    };
+	};
+
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*** IMPORTS FROM imports-loader ***/
+	var $ = __webpack_require__(1);
+	var jQuery = __webpack_require__(1);
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.Controller = Controller;
+
+	var _cell = __webpack_require__(4);
+
+	var _cell2 = _interopRequireDefault(_cell);
+
+	var _model2 = __webpack_require__(2);
+
+	var _model3 = _interopRequireDefault(_model2);
+
+	var _view2 = __webpack_require__(3);
+
+	var _view3 = _interopRequireDefault(_view2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function Controller(view, model) {
+	    var _view = view;
+	    var _model = model;
+	    var tick = null;
+
+	    //set the handlers for the view
+	    var _initView = function _initView() {
+	        // create field
+	        $("#createButton").on("click", function () {
+	            var $event = jQuery.Event("createField");
+	            $event.sizeX = parseInt($('#sizeX')[0].value) + 2;
+	            $event.sizeY = parseInt($('#sizeY')[0].value) + 2;
+	            if ($('#randomFill').is(':checked')) {
+	                $event.status = true;
+	            }
+	            $('#nextButton, #startButton, #speed').css('display', 'inline');
+	            $('body').trigger($event);
+	        });
+
+	        // create field on enter
+	        $('#createButton').on("keypress", function (e) {
+	            if (e.which == 13) {
+	                var $event = jQuery.Event("createField");
+	                $event.sizeX = parseInt($('#sizeX')[0].value) + 2;
+	                $event.sizeY = parseInt($('#sizeY')[0].value) + 2;
+	                if ($('#randomFill').is(':checked')) {
+	                    $event.status = true;
+	                }
+	                $('#nextButton, #startButton, #speed').css('display', 'inline');
+	                $('body').trigger($event);
+	            }
+	        });
+
+	        // change cell status
+	        $('table').on("click", 'td', function (e) {
+	            var cell = e.currentTarget;
+	            var $event = jQuery.Event("changeStatus");
+	            $event.id = $(cell).prop('id');
+	            $event.status = $(cell).prop('class');
+	            $('body').trigger($event);
+	        });
+
+	        // next step
+	        $('#nextButton').on("click", function () {
+	            var $event = jQuery.Event("changeState");
+	            $('body').trigger($event);
+	        });
+
+	        // start auto step
+	        $('#startButton').on("click", function () {
+	            var $event = jQuery.Event("changeStateAuto");
+	            var $sw = $('#startButton').html();
+	            if (_model.gameStatus() === false) {
+	                _model.gameStart();
+	                $('#startButton').html('stop');
+	                $event.state = 'start';
+	                $event.speed = $('#speed').val();
+	            } else {
+	                _model.gameStop();
+	                $('#startButton').html('start');
+	                $event.state = 'stop';
+	            }
+	            $('body').trigger($event);
+	        });
+
+	        // dynamic speed change
+	        $('#speed').on("change", function () {
+	            var $event = jQuery.Event("changeStateAuto");
+	            if (_model.gameStatus() === true) {
+	                $event.state = 'stop';
+	                $('body').trigger($event);
+	                $event.state = 'start';
+	                $event.speed = $('#speed').val() * 500;
+	                $('body').trigger($event);
+	            }
+	        });
+	    };
+	    _initView();
+
+	    // event binding
+	    $('body').bind('createField', function (e) {
+	        _model.createField(e.sizeX, e.sizeY, e.status);
+	    });
+
+	    $('body').bind('changeState', function (e) {
+	        var newField = _countField(_model.getData());
+	        _model.fieldState(newField);
+	    });
+
+	    $('body').bind('changeStateAuto', function (e) {
+	        var sw = $('#startButton').html();
+	        if (e.state == 'start') {
+	            tick = setInterval(changeField, Number(e.speed) * 100);
+	        } else if (e.state = 'stop') {
+	            clearInterval(tick);
+	        }
+
+	        function changeField() {
+	            var newField = _countField(_model.getData());
+	            _model.fieldState(newField);
+	        }
+	    });
+
+	    $('body').bind('changeStatus', function (e) {
+	        _model.cellStatus(_changeCellStatus(e));
+	    });
+
+	    $('body').bind('updateView', function (e) {
+	        _view.updateView(_model.getData());
+	    });
+
+	    function _changeCellStatus(e) {
+	        var splitId = e.id.split('_');
+	        e.row = splitId[0].substring(3);
+	        e.col = splitId[1].substring(3);
+	        var cell = _cell2.default.create(e.row, e.col);
+	        if (e.status == 'dead') {
+	            cell.changeStatus('alive');
+	            $('#' + e.id).prop('class', 'alive');
+	        } else {
+	            cell.changeStatus('dead');
+	            $('#' + e.id).prop('class', 'dead');
+	        }
+	        return cell;
+	    }
+
+	    function _countField(field) {
+	        var newField = [];
+	        var lenX = field.length;
+	        var lenY = field[0].length;
+
+	        for (var i = 0; i < field.length; i++) {
+	            newField.push([]);
+	            for (var j = 0; j < field[0].length; j++) {
+	                var counter = 0;
+	                newField[i].push($.extend(true, [], field[i][j]));
+
+	                // Cells on borders are hidden and not counted
+	                if (i != 0 && j != 0 && i != minus(lenX) && j != minus(lenY)) {
+	                    counter = counter + field[i][plus(j)].status;
+	                    counter = counter + field[i][minus(j)].status;
+	                    counter = counter + field[minus(i)][j].status;
+	                    counter = counter + field[plus(i)][j].status;
+	                    counter = counter + field[plus(i)][minus(j)].status;
+	                    counter = counter + field[plus(i)][plus(j)].status;
+	                    counter = counter + field[minus(i)][plus(j)].status;
+	                    counter = counter + field[minus(i)][minus(j)].status;
+	                }
+	                if (field[i][j].isAlive() == 'alive') {
+	                    if (counter < 2 || counter > 3) {
+	                        newField[i][j].changeStatus('dead');
+	                    }
+	                } else {
+	                    if (counter == 3) {
+	                        newField[i][j].changeStatus('alive');
+	                    }
+	                }
+	            }
+	        }
+	        return newField;
+	    }
+
+	    function plus(number) {
+	        var num = number;
+	        num++;
+	        return num;
+	    }
+
+	    function minus(number) {
+	        var num = number;
+	        num--;
+	        return num;
+	    }
+
+	    return {
+	        // public functions
+	        changeCellStatusForTesting: function changeCellStatusForTesting(e) {
+	            return _changeCellStatus(e);
+	        },
+
+	        countFieldForTesting: function countFieldForTesting(field) {
+	            return _countField(field);
+	        }
+	    };
+	};
+
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(3);
+	var content = __webpack_require__(7);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(15)(content, {});
+	var update = __webpack_require__(19)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -10172,26 +10583,26 @@
 	}
 
 /***/ },
-/* 3 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(4)();
+	exports = module.exports = __webpack_require__(8)();
 	// imports
 
 
 	// module
-	exports.push([module.id, "html, body{\n\tpadding: 0;\n\tmargin: 0;\n\tfont-size:20px;\n\ttext-align:center;\t\n\tfont-family: merriweatherSans;\n\tbackground-color: #000500;\n\tpadding:0px;\n\tcolor:#9E1024;\n}\n\n#mocha{\n\tcolor:white;\n\ttext-shadow: none;\n\tfloat:right;\n}\n\n#mocha h1{\n\ttext-shadow: none;\n}\n\nh1{\n\tmargin:0px;\n\tpadding-top: 20px;\n\tpadding-bottom: 10px;\n\ttext-shadow: 2px 2px 1px #ffb029;\n}\n\n.header{\n    background: #405040; \n    background: -webkit-linear-gradient(#405040, #405240);\n    background: -o-linear-gradient(#405040, #405240); \n    background: -moz-linear-gradient(#405040, #405240); \n    background: linear-gradient(#405040, #405240); \n    border-bottom:2px solid #9E1024;\n}\n\nfieldset{\n\twidth:500px;\n\tmargin:0 auto;\n\tmargin-bottom:20px;\n\tborder:none;\n}\n\ntable{\n\tmargin: 0 auto;\n\tmargin-top: 30px;\n}\n\ntd{\n\theight:10px;\n\twidth:10px;\n\tborder-radius:5px;\n}\n\ntd.alive{\n\tbackground: green;\n}\n\ntd.dead{\n\tbackground: #D9D9D9;\n}\n\ninput[type=\"number\"]{\n\twidth:50px;\n\tfont-size: 20px;\t\n\tbackground-color:#ddd;\n\tcolor:#9E1024;\n}\n\ninput[type=\"checkbox\"]{\n\ttransform: scale(1.5);\n}\n\nlabel{\n\tfont-size: 27px;\n}\n\nbutton{\n\twidth:80px;\n\tfont-size:21px;\n\tpadding-bottom:3px;\n\tborder-radius: 3px;\n\tcolor:#9E1024;\n\tbackground-color:#aaaaaa;\n}\n\nbutton:hover{\n\tcursor:pointer;\n}\n\n#nextButton, #startButton{\n\tdisplay: none;\n}\n\ninput[type=\"range\"]{\n\twidth:50px;\n\tvertical-align: sub;\n\tdisplay: none;\n}\n\n@font-face {\n    font-family: merriweatherSans;\n    font-style: normal;\n    font-weight: normal;\n    src: local('merriweatherSans'),\n    \turl(" + __webpack_require__(6) + ") format('otf'),\n    \turl(" + __webpack_require__(7) + ") format('ttf'),\n    \turl(" + __webpack_require__(8) + ") format('svg');\n}\n\n@font-face {\n    font-family: merriweatherSans;\n    font-style: normal;\n    font-weight: bold;\n    src: local('merriweatherSans'),\n    \turl(" + __webpack_require__(9) + ") format('otf'),\n    \turl(" + __webpack_require__(10) + ") format('ttf'),\n    \turl(" + __webpack_require__(11) + ") format('svg');\n}\n\n@font-face {\n    font-family: merriweatherSans;\n    font-style: normal;\n    font-weight: lighter;\n    src: local('merriweatherSans'),\n    \turl(" + __webpack_require__(12) + ") format('otf'),\n    \turl(" + __webpack_require__(13) + ") format('ttf'),\n    \turl(" + __webpack_require__(14) + ") format('svg');\n}\n\n", ""]);
+	exports.push([module.id, "html, body{\n\tpadding: 0;\n\tmargin: 0;\n\tfont-size:20px;\n\ttext-align:center;\t\n\tfont-family: merriweatherSans;\n\tbackground-color: #000500;\n\tpadding:0px;\n\tcolor:#9E1024;\n}\n\n#mocha{\n\tcolor:white;\n\ttext-shadow: none;\n\tfloat:right;\n}\n\n#mocha h1{\n\ttext-shadow: none;\n}\n\nh1{\n\tmargin:0px;\n\tpadding-top: 20px;\n\tpadding-bottom: 10px;\n\ttext-shadow: 2px 2px 1px #ffb029;\n}\n\n.header{\n    background: #405040; \n    background: -webkit-linear-gradient(#405040, #405240);\n    background: -o-linear-gradient(#405040, #405240); \n    background: -moz-linear-gradient(#405040, #405240); \n    background: linear-gradient(#405040, #405240); \n    border-bottom:2px solid #9E1024;\n}\n\nfieldset{\n\twidth:500px;\n\tmargin:0 auto;\n\tmargin-bottom:20px;\n\tborder:none;\n}\n\ntable{\n\tmargin: 0 auto;\n\tmargin-top: 30px;\n}\n\ntd{\n\theight:10px;\n\twidth:10px;\n\tborder-radius:5px;\n}\n\ntd.alive{\n\tbackground: green;\n}\n\ntd.dead{\n\tbackground: #D9D9D9;\n}\n\ninput[type=\"number\"]{\n\twidth:50px;\n\tfont-size: 20px;\t\n\tbackground-color:#ddd;\n\tcolor:#9E1024;\n}\n\ninput[type=\"checkbox\"]{\n\ttransform: scale(1.5);\n}\n\nlabel{\n\tfont-size: 27px;\n}\n\nbutton{\n\twidth:80px;\n\tfont-size:21px;\n\tpadding-bottom:3px;\n\tborder-radius: 3px;\n\tcolor:#9E1024;\n\tbackground-color:#aaaaaa;\n}\n\nbutton:hover{\n\tcursor:pointer;\n}\n\n#nextButton, #startButton{\n\tdisplay: none;\n}\n\ninput[type=\"range\"]{\n\twidth:50px;\n\tvertical-align: sub;\n\tdisplay: none;\n}\n\n@font-face {\n    font-family: merriweatherSans;\n    font-style: normal;\n    font-weight: normal;\n    src: local('merriweatherSans'),\n    \turl(" + __webpack_require__(10) + ") format('otf'),\n    \turl(" + __webpack_require__(11) + ") format('ttf'),\n    \turl(" + __webpack_require__(12) + ") format('svg');\n}\n\n@font-face {\n    font-family: merriweatherSans;\n    font-style: normal;\n    font-weight: bold;\n    src: local('merriweatherSans'),\n    \turl(" + __webpack_require__(13) + ") format('otf'),\n    \turl(" + __webpack_require__(14) + ") format('ttf'),\n    \turl(" + __webpack_require__(15) + ") format('svg');\n}\n\n@font-face {\n    font-family: merriweatherSans;\n    font-style: normal;\n    font-weight: lighter;\n    src: local('merriweatherSans'),\n    \turl(" + __webpack_require__(16) + ") format('otf'),\n    \turl(" + __webpack_require__(17) + ") format('ttf'),\n    \turl(" + __webpack_require__(18) + ") format('svg');\n}\n\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 4 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*** IMPORTS FROM imports-loader ***/
-	var $ = __webpack_require__(5);
-	var jQuery = __webpack_require__(5);
+	var $ = __webpack_require__(9);
+	var jQuery = __webpack_require__(9);
 
 	/*
 		MIT License http://www.opensource.org/licenses/mit-license.php
@@ -10247,12 +10658,12 @@
 
 
 /***/ },
-/* 5 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*** IMPORTS FROM imports-loader ***/
-	var $ = __webpack_require__(5);
-	var jQuery = __webpack_require__(5);
+	var $ = __webpack_require__(9);
+	var jQuery = __webpack_require__(9);
 
 	/*eslint-disable no-unused-vars*/
 	/*!
@@ -20332,61 +20743,61 @@
 
 
 /***/ },
-/* 6 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "9df744bdf9372cf4cff87bb3e2d68fc8.otf";
 
 /***/ },
-/* 7 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "f46e467d8eaeb385c78f101cf310dd86.ttf";
 
 /***/ },
-/* 8 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "60a620dfa3648fd7dff10b11691590b2.svg";
 
 /***/ },
-/* 9 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "dcbcd5920a5ef18caf00f8132215fed5.otf";
 
 /***/ },
-/* 10 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "501389f46f85b844df85c66c3aa929ff.ttf";
 
 /***/ },
-/* 11 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "63f9eb1969c96cebdafd0723e0d02e19.svg";
 
 /***/ },
-/* 12 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "ab10f4470d743ae06b78137be951e957.otf";
 
 /***/ },
-/* 13 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "d351b809b2bf4365ee00f89279f11f81.ttf";
 
 /***/ },
-/* 14 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "2048a33b9b11e647d43ece1128b9f30a.svg";
 
 /***/ },
-/* 15 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -20635,372 +21046,6 @@
 		if(oldSrc)
 			URL.revokeObjectURL(oldSrc);
 	}
-
-
-/***/ },
-/* 16 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*** IMPORTS FROM imports-loader ***/
-	var $ = __webpack_require__(1);
-	var jQuery = __webpack_require__(1);
-
-	'use strict';
-
-	var Cell = function Cell(x, y) {
-	    this.x = x;
-	    this.y = y;
-	    this.status = 0;
-	    this.create = function (x, y) {
-	        this.x = x;
-	        this.y = y;
-	        this.status = 0;
-	        return this;
-	    }, this.isAlive = function () {
-	        if (this.status == 1) return 'alive';else return 'dead';
-	    }, this.changeStatus = function (_status) {
-
-	        if (_status == 'alive' || _status == 1 || _status == true) {
-	            this.status = 1;
-	        } else if (_status == 'dead' || _status == 0 || _status == false) {
-	            this.status = 0;
-	        } else {
-	            if (_status == 0) this.status = 1;else this.status = 0;
-	        }
-	    };
-	};
-
-	module.exports = new Cell();
-
-
-/***/ },
-/* 17 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*** IMPORTS FROM imports-loader ***/
-	var $ = __webpack_require__(1);
-	var jQuery = __webpack_require__(1);
-
-	'use strict';
-
-	var Cell = __webpack_require__(16);
-
-	var Model = function Model() {
-	    var field = [];
-	    var game = false;
-
-	    var _notifyController = function _notifyController() {
-	        $('body').trigger('updateView');
-	    };
-	    // public methods
-	    return {
-	        createField: function createField(sizeX, sizeY, randomFill) {
-	            field = [];
-	            for (var i = 0; i < sizeX; i++) {
-	                field.push([]);
-	                for (var j = 0; j < sizeY; j++) {
-	                    field[i].push(Cell.create(i, j));
-	                }
-	            }
-
-	            if (randomFill === true) {
-	                for (var i = 0; i < sizeX; i++) {
-	                    for (var j = 0; j < sizeY; j++) {
-	                        var random = Math.floor(Math.random() * 100 + 1);
-	                        if (random > 80) {
-	                            field[i][j].changeStatus('alive');
-	                        }
-	                    }
-	                }
-	            }
-	            _notifyController();
-	        },
-
-	        fieldState: function fieldState(_field) {
-	            field = _field;
-	            _notifyController();
-	        },
-
-	        cellStatus: function cellStatus(cell) {
-	            // При смене цвета точки таблица не перерисовывается
-	            field[cell.x][cell.y].changeStatus(cell.status);
-	        },
-
-	        getData: function getData() {
-	            return field;
-	        },
-
-	        gameStatus: function gameStatus() {
-	            if (game == true) {
-	                return true;
-	            } else {
-	                return false;
-	            }
-	        },
-
-	        gameStart: function gameStart() {
-	            game = true;
-	        },
-
-	        gameStop: function gameStop() {
-	            game = false;
-	        }
-	    };
-	};
-
-	module.exports = Model();
-
-
-/***/ },
-/* 18 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*** IMPORTS FROM imports-loader ***/
-	var $ = __webpack_require__(1);
-	var jQuery = __webpack_require__(1);
-
-	'use strict';
-
-	var View = function View() {
-	    var _updateView = function _updateView(field) {
-	        $('#field tr').remove();
-	        var fragment = document.createDocumentFragment();
-	        // In table create rows and then columns. In id write number of column and row.
-	        for (var i = 0; i < field.length; i++) {
-	            var tr = document.createElement("tr");
-	            tr.setAttribute('id', 'row_num' + i);
-	            fragment.appendChild(tr);
-	            for (var j = 0; j < field[0].length; j++) {
-	                var id = 'row' + field[i][j].x + '_col' + field[i][j].y;
-	                var td = document.createElement("td");
-	                td.setAttribute('id', id);
-	                td.setAttribute('class', field[i][j].isAlive());
-	                tr.appendChild(td);
-	                fragment.appendChild(tr);
-	            }
-	        }
-	        $('#field').append(fragment);
-
-	        // Hide cells on borders
-	        $('#row_num0').css('display', 'none');
-	        $('#row_num' + (field.length - 1)).css('display', 'none');
-	        for (var i = 0; i < field.length; i++) {
-	            $('#row' + i + '_col0').css('display', 'none');
-	            $('#row' + i + '_col' + (field[0].length - 1)).css('display', 'none');
-	        }
-	    };
-
-	    return {
-	        updateView: function updateView(field) {
-	            _updateView(field);
-	        }
-	    };
-	};
-
-	module.exports = View();
-
-
-/***/ },
-/* 19 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*** IMPORTS FROM imports-loader ***/
-	var $ = __webpack_require__(1);
-	var jQuery = __webpack_require__(1);
-
-	"use strict";
-
-	var Cell = __webpack_require__(16);
-	var Model = __webpack_require__(17);
-	var View = __webpack_require__(18);
-
-	var Controller = function Controller(view, model) {
-	    var _view = view;
-	    var _model = model;
-	    var tick = null;
-
-	    //set the handlers for the view
-	    var _initView = function _initView() {
-	        // create field
-	        $("#createButton").on("click", function () {
-	            var $event = jQuery.Event("createField");
-	            $event.sizeX = parseInt($('#sizeX')[0].value) + 2;
-	            $event.sizeY = parseInt($('#sizeY')[0].value) + 2;
-	            if ($('#randomFill').is(':checked')) {
-	                $event.status = true;
-	            }
-	            $('#nextButton, #startButton, #speed').css('display', 'inline');
-	            $('body').trigger($event);
-	        });
-
-	        // create field on enter
-	        $('#createButton').on("keypress", function (e) {
-	            if (e.which == 13) {
-	                var $event = jQuery.Event("createField");
-	                $event.sizeX = parseInt($('#sizeX')[0].value) + 2;
-	                $event.sizeY = parseInt($('#sizeY')[0].value) + 2;
-	                if ($('#randomFill').is(':checked')) {
-	                    $event.status = true;
-	                }
-	                $('#nextButton, #startButton, #speed').css('display', 'inline');
-	                $('body').trigger($event);
-	            }
-	        });
-
-	        // change cell status
-	        $('table').on("click", 'td', function (e) {
-	            var cell = e.currentTarget;
-	            var $event = jQuery.Event("changeStatus");
-	            $event.id = $(cell).prop('id');
-	            $event.status = $(cell).prop('class');
-	            $('body').trigger($event);
-	        });
-
-	        // next step
-	        $('#nextButton').on("click", function () {
-	            var $event = jQuery.Event("changeState");
-	            $('body').trigger($event);
-	        });
-
-	        // start auto step
-	        $('#startButton').on("click", function () {
-	            var $event = jQuery.Event("changeStateAuto");
-	            var $sw = $('#startButton').html();
-	            if (_model.gameStatus() === false) {
-	                _model.gameStart();
-	                $('#startButton').html('stop');
-	                $event.state = 'start';
-	                $event.speed = $('#speed').val();
-	            } else {
-	                _model.gameStop();
-	                $('#startButton').html('start');
-	                $event.state = 'stop';
-	            }
-	            $('body').trigger($event);
-	        });
-
-	        // dynamic speed change
-	        $('#speed').on("change", function () {
-	            var $event = jQuery.Event("changeStateAuto");
-	            if (_model.gameStatus() === true) {
-	                $event.state = 'stop';
-	                $('body').trigger($event);
-	                $event.state = 'start';
-	                $event.speed = $('#speed').val() * 500;
-	                $('body').trigger($event);
-	            }
-	        });
-	    };
-	    _initView();
-
-	    // event binding
-	    $('body').bind('createField', function (e) {
-	        _model.createField(e.sizeX, e.sizeY, e.status);
-	    });
-
-	    $('body').bind('changeState', function (e) {
-	        var newField = _countField(_model.getData());
-	        _model.fieldState(newField);
-	    });
-
-	    $('body').bind('changeStateAuto', function (e) {
-	        var sw = $('#startButton').html();
-	        if (e.state == 'start') {
-	            tick = setInterval(changeField, Number(e.speed) * 100);
-	        } else if (e.state = 'stop') {
-	            clearInterval(tick);
-	        }
-
-	        function changeField() {
-	            var newField = _countField(_model.getData());
-	            _model.fieldState(newField);
-	        }
-	    });
-
-	    $('body').bind('changeStatus', function (e) {
-	        _model.cellStatus(_changeCellStatus(e));
-	    });
-
-	    $('body').bind('updateView', function (e) {
-	        _view.updateView(_model.getData());
-	    });
-
-	    function _changeCellStatus(e) {
-	        var splitId = e.id.split('_');
-	        e.row = splitId[0].substring(3);
-	        e.col = splitId[1].substring(3);
-	        var cell = Cell.create(e.row, e.col);
-	        if (e.status == 'dead') {
-	            cell.changeStatus('alive');
-	            $('#' + e.id).prop('class', 'alive');
-	        } else {
-	            cell.changeStatus('dead');
-	            $('#' + e.id).prop('class', 'dead');
-	        }
-	        return cell;
-	    }
-
-	    function _countField(field) {
-	        var newField = [];
-	        var lenX = field.length;
-	        var lenY = field[0].length;
-
-	        for (var i = 0; i < field.length; i++) {
-	            newField.push([]);
-	            for (var j = 0; j < field[0].length; j++) {
-	                var counter = 0;
-	                newField[i].push($.extend(true, [], field[i][j]));
-
-	                // Cells on borders are hidden and not counted
-	                if (i != 0 && j != 0 && i != minus(lenX) && j != minus(lenY)) {
-	                    counter = counter + field[i][plus(j)].status;
-	                    counter = counter + field[i][minus(j)].status;
-	                    counter = counter + field[minus(i)][j].status;
-	                    counter = counter + field[plus(i)][j].status;
-	                    counter = counter + field[plus(i)][minus(j)].status;
-	                    counter = counter + field[plus(i)][plus(j)].status;
-	                    counter = counter + field[minus(i)][plus(j)].status;
-	                    counter = counter + field[minus(i)][minus(j)].status;
-	                }
-	                if (field[i][j].isAlive() == 'alive') {
-	                    if (counter < 2 || counter > 3) {
-	                        newField[i][j].changeStatus('dead');
-	                    }
-	                } else {
-	                    if (counter == 3) {
-	                        newField[i][j].changeStatus('alive');
-	                    }
-	                }
-	            }
-	        }
-	        return newField;
-	    }
-
-	    function plus(number) {
-	        var num = number;
-	        num++;
-	        return num;
-	    }
-
-	    function minus(number) {
-	        var num = number;
-	        num--;
-	        return num;
-	    }
-
-	    return {
-	        // public functions
-	        changeCellStatusForTesting: function changeCellStatusForTesting(e) {
-	            return _changeCellStatus(e);
-	        },
-
-	        countFieldForTesting: function countFieldForTesting(field) {
-	            return _countField(field);
-	        }
-	    };
-	};
-
-	module.exports = Controller(View, Model);
 
 
 /***/ }
