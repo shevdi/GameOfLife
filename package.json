@@ -2,12 +2,12 @@
   "name": "gameoflife",
   "version": "1.0.0",
   "description": "Conway's game of Life",
-  "main": "./js/app.js",
+  "main": "./src/js/app.js",
   "scripts": {
     "build": "webpack",
     "start": "static &",
-    "test": "babel './src/js/test.js' -d './public/js'",
-    "test": "mocha-webpack --webpack-config webpack.config-test.js \"src/**/*.test.js\""
+    "build-test": "babel --preset es2015 test -d public",
+    "test": "mocha --compilers js:babel-core/register ./public/**/test.js"
   },
   "repository": {
     "type": "git",
