@@ -7,7 +7,8 @@
     "build": "webpack",
     "start": "static &",
     "build-test": "babel --preset es2015 test -d public",
-    "test": "mocha --compilers js:babel-core/register ./public/**/test.js"
+    "test-node": "mocha --compilers js:babel-core/register ./public/**/test.js",
+    "test": "karma start"
   },
   "repository": {
     "type": "git",
@@ -29,9 +30,19 @@
     "imports-loader": "^0.6.5",
     "install": "^0.8.1",
     "jquery": "^3.1.0",
+    "json-loader": "^0.5.4",
+    "karma": "^1.2.0",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-mocha": "^1.1.1",
+    "karma-mocha-reporter": "^2.1.0",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^1.8.0",
     "mocha": "^3.0.2",
     "mocha-webpack": "^0.6.0",
     "npm": "^3.10.6",
+    "phantomjs": "^2.1.7",
+    "phantomjs-polyfill": "0.0.2",
     "webpack": "^1.13.1"
   }
 }

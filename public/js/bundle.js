@@ -10583,7 +10583,7 @@
 
 
 	// module
-	exports.push([module.id, "html, body{\n\tpadding: 0;\n\tmargin: 0;\n\tfont-size:20px;\n\ttext-align:center;\t\n\tfont-family: merriweatherSans;\n\tbackground-color: #000500;\n\tpadding:0px;\n\tcolor:#9E1024;\n}\n\n#mocha{\n\tcolor:white;\n\ttext-shadow: none;\n\tfloat:right;\n}\n\n#mocha h1{\n\ttext-shadow: none;\n}\n\nh1{\n\tmargin:0px;\n\tpadding-top: 20px;\n\tpadding-bottom: 10px;\n\ttext-shadow: 2px 2px 1px #ffb029;\n}\n\n.header{\n    background: #405040; \n    background: -webkit-linear-gradient(#405040, #405240);\n    background: -o-linear-gradient(#405040, #405240); \n    background: -moz-linear-gradient(#405040, #405240); \n    background: linear-gradient(#405040, #405240); \n    border-bottom:2px solid #9E1024;\n}\n\nfieldset{\n\twidth:500px;\n\tmargin:0 auto;\n\tmargin-bottom:20px;\n\tborder:none;\n}\n\ntable{\n\tmargin: 0 auto;\n\tmargin-top: 30px;\n}\n\ntd{\n\theight:10px;\n\twidth:10px;\n\tborder-radius:5px;\n}\n\ntd.alive{\n\tbackground: green;\n}\n\ntd.dead{\n\tbackground: #D9D9D9;\n}\n\ninput[type=\"number\"]{\n\twidth:50px;\n\tfont-size: 20px;\t\n\tbackground-color:#ddd;\n\tcolor:#9E1024;\n}\n\ninput[type=\"checkbox\"]{\n\ttransform: scale(1.5);\n}\n\nlabel{\n\tfont-size: 27px;\n}\n\nbutton{\n\twidth:80px;\n\tfont-size:21px;\n\tpadding-bottom:3px;\n\tborder-radius: 3px;\n\tcolor:#9E1024;\n\tbackground-color:#aaaaaa;\n}\n\nbutton:hover{\n\tcursor:pointer;\n}\n\n#nextButton, #startButton{\n\tdisplay: none;\n}\n\ninput[type=\"range\"]{\n\twidth:50px;\n\tvertical-align: sub;\n\tdisplay: none;\n}\n\n@font-face {\n    font-family: merriweatherSans;\n    font-style: normal;\n    font-weight: normal;\n    src: local('merriweatherSans'),\n    \turl(" + __webpack_require__(10) + ") format('otf'),\n    \turl(" + __webpack_require__(11) + ") format('ttf'),\n    \turl(" + __webpack_require__(12) + ") format('svg');\n}\n\n@font-face {\n    font-family: merriweatherSans;\n    font-style: normal;\n    font-weight: bold;\n    src: local('merriweatherSans'),\n    \turl(" + __webpack_require__(13) + ") format('otf'),\n    \turl(" + __webpack_require__(14) + ") format('ttf'),\n    \turl(" + __webpack_require__(15) + ") format('svg');\n}\n\n@font-face {\n    font-family: merriweatherSans;\n    font-style: normal;\n    font-weight: lighter;\n    src: local('merriweatherSans'),\n    \turl(" + __webpack_require__(16) + ") format('otf'),\n    \turl(" + __webpack_require__(17) + ") format('ttf'),\n    \turl(" + __webpack_require__(18) + ") format('svg');\n}\n\n", ""]);
+	exports.push([module.id, "html, body{\r\n\tpadding: 0;\r\n\tmargin: 0;\r\n\tfont-size:20px;\r\n\ttext-align:center;\t\r\n\tfont-family: merriweatherSans;\r\n\tbackground-color: #000500;\r\n\tpadding:0px;\r\n\tcolor:#9E1024;\r\n}\r\n\r\n#mocha{\r\n\tcolor:white;\r\n\ttext-shadow: none;\r\n\tfloat:right;\r\n}\r\n\r\n#mocha h1{\r\n\ttext-shadow: none;\r\n}\r\n\r\nh1{\r\n\tmargin:0px;\r\n\tpadding-top: 20px;\r\n\tpadding-bottom: 10px;\r\n\ttext-shadow: 2px 2px 1px #ffb029;\r\n}\r\n\r\n.header{\r\n    background: #405040; \r\n    background: -webkit-linear-gradient(#405040, #405240);\r\n    background: -o-linear-gradient(#405040, #405240); \r\n    background: -moz-linear-gradient(#405040, #405240); \r\n    background: linear-gradient(#405040, #405240); \r\n    border-bottom:2px solid #9E1024;\r\n}\r\n\r\nfieldset{\r\n\twidth:500px;\r\n\tmargin:0 auto;\r\n\tmargin-bottom:20px;\r\n\tborder:none;\r\n}\r\n\r\ntable{\r\n\tmargin: 0 auto;\r\n\tmargin-top: 30px;\r\n}\r\n\r\ntd{\r\n\theight:10px;\r\n\twidth:10px;\r\n\tborder-radius:5px;\r\n}\r\n\r\ntd.alive{\r\n\tbackground: green;\r\n}\r\n\r\ntd.dead{\r\n\tbackground: #D9D9D9;\r\n}\r\n\r\ninput[type=\"number\"]{\r\n\twidth:50px;\r\n\tfont-size: 20px;\t\r\n\tbackground-color:#ddd;\r\n\tcolor:#9E1024;\r\n}\r\n\r\ninput[type=\"checkbox\"]{\r\n\ttransform: scale(1.5);\r\n}\r\n\r\nlabel{\r\n\tfont-size: 27px;\r\n}\r\n\r\nbutton{\r\n\twidth:80px;\r\n\tfont-size:21px;\r\n\tpadding-bottom:3px;\r\n\tborder-radius: 3px;\r\n\tcolor:#9E1024;\r\n\tbackground-color:#aaaaaa;\r\n}\r\n\r\nbutton:hover{\r\n\tcursor:pointer;\r\n}\r\n\r\n#nextButton, #startButton{\r\n\tdisplay: none;\r\n}\r\n\r\ninput[type=\"range\"]{\r\n\twidth:50px;\r\n\tvertical-align: sub;\r\n\tdisplay: none;\r\n}\r\n\r\n@font-face {\r\n    font-family: merriweatherSans;\r\n    font-style: normal;\r\n    font-weight: normal;\r\n    src: local('merriweatherSans'),\r\n    \turl(" + __webpack_require__(10) + ") format('otf'),\r\n    \turl(" + __webpack_require__(11) + ") format('ttf'),\r\n    \turl(" + __webpack_require__(12) + ") format('svg');\r\n}\r\n\r\n@font-face {\r\n    font-family: merriweatherSans;\r\n    font-style: normal;\r\n    font-weight: bold;\r\n    src: local('merriweatherSans'),\r\n    \turl(" + __webpack_require__(13) + ") format('otf'),\r\n    \turl(" + __webpack_require__(14) + ") format('ttf'),\r\n    \turl(" + __webpack_require__(15) + ") format('svg');\r\n}\r\n\r\n@font-face {\r\n    font-family: merriweatherSans;\r\n    font-style: normal;\r\n    font-weight: lighter;\r\n    src: local('merriweatherSans'),\r\n    \turl(" + __webpack_require__(16) + ") format('otf'),\r\n    \turl(" + __webpack_require__(17) + ") format('ttf'),\r\n    \turl(" + __webpack_require__(18) + ") format('svg');\r\n}\r\n\r\n", ""]);
 
 	// exports
 
@@ -20750,7 +20750,7 @@
 /* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "60a620dfa3648fd7dff10b11691590b2.svg";
+	module.exports = __webpack_require__.p + "934e15cf6e9d8850de1e8f4fd4a32f2d.svg";
 
 /***/ },
 /* 13 */
@@ -20768,7 +20768,7 @@
 /* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "63f9eb1969c96cebdafd0723e0d02e19.svg";
+	module.exports = __webpack_require__.p + "1742227804b59839dfdd012d60b7dc02.svg";
 
 /***/ },
 /* 16 */
@@ -20786,7 +20786,7 @@
 /* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "2048a33b9b11e647d43ece1128b9f30a.svg";
+	module.exports = __webpack_require__.p + "e5fd3a04b18a042325de186102f9909c.svg";
 
 /***/ },
 /* 19 */
