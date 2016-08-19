@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Game of Life</title>
-    <meta name="description" content="Conway's Game of Life"> 
-    <meta name="keywords" content="game, conway, life">   
+    <meta name="description" content="Conway's Game of Life">
+    <meta name="keywords" content="game, conway, life">
     <meta name="author" content="Dmitry Shevelev">
     <link rel="shortcut icon" href="myfavicon.ico" type="image/x-icon" />
 </head>
-<body>    
+<body>
     <div class="header">
         <h1>Game of Life</h1>
         <fieldset>
@@ -16,14 +16,13 @@
             <input type="number" id="sizeX" min="10" max="70" tabindex="2" />
             <input type="checkbox" id="randomFill" tabindex="3" />
             <button id="createButton" tabindex="4">create</button>
-            <button id="nextButton" tabindex="5">next</button>   
-            <button id="startButton" tabindex="6">start</button>      
-            <input type="range" id="speed" min="1" max="10" tabindex="7" />   
-        </fieldset>    
-    </div>    
+            <button id="nextButton" tabindex="5">next</button>
+            <button id="startButton" tabindex="6">start</button>
+            <input type="range" id="speed" min="1" max="10" tabindex="7" />
+        </fieldset>
+    </div>
     <table id="field" class="field"></table>
     <div id="mocha"></div>
 <script src="js/bundle.js"></script>
-<script src="js/test.js"></script>
 </body>
 </html>

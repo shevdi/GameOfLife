@@ -24,22 +24,22 @@ describe("GameOfLife", function(){
                     assert.equal(field[i][j].x, i);
                     assert.equal(field[i][j].y, j);
                     assert.equal(field[i][j].status, 0);
-                    assert.equal(field[i][j].isAlive(), 'dead');                    
+                    assert.equal(field[i][j].isAlive(), 'dead');
                 }
             }
         });
     });
 
-    describe("Cell status", function() {        
+    describe("Cell status", function() {
         it("changes cell status", function() {
             for ( var i = 0; i < field.length; i++){
                 for ( var j = 0; j < field[0].length; j++){
                     var cell = controller.changeCellStatusForTesting( { id: "row" + i + "_col" + j, status: "dead" } );
                     assert.equal(cell.x, i);
                     assert.equal(cell.y, j);
-                    assert.equal(cell.status, 1);                  
+                    assert.equal(cell.status, 1);
                 }
-            }            
+            }
         });
     });
 
@@ -49,7 +49,7 @@ describe("GameOfLife", function(){
             var alive_newField = JSON.parse(JSON.stringify( field ));
 
             // cells for testing before processing
-            field[1][1].status = 1; 
+            field[1][1].status = 1;
             field[1][2].status = 1;
             field[1][3].status = 1;
             field[1][18].status = 1;
@@ -63,13 +63,13 @@ describe("GameOfLife", function(){
             field[9][13].status = 1;
             field[8][12].status = 1;
 
-            var newField = controller.countFieldForTesting(field);  
+            var newField = controller.countFieldForTesting(field);
 
             // right answer
-            alive_newField[1][2].status = 1;    
-            alive_newField[2][2].status = 1;              
-            alive_newField[1][18].status = 1;   
-            alive_newField[1][17].status = 1; 
+            alive_newField[1][2].status = 1;
+            alive_newField[2][2].status = 1;
+            alive_newField[1][18].status = 1;
+            alive_newField[1][17].status = 1;
             alive_newField[2][18].status = 1;
             alive_newField[2][17].status = 1;
 
@@ -77,20 +77,20 @@ describe("GameOfLife", function(){
             alive_newField[9][13].status = 1;
             alive_newField[10][12].status = 1;
             alive_newField[10][13].status = 1;
-            alive_newField[11][12].status = 1;   
+            alive_newField[11][12].status = 1;
 
             // to see position of wrong cell uncomment console.log
             for ( var i = 0; i < newField.length; i++){
                 for ( var j = 0; j < newField[0].length; j++){
                     // console.log('x=' + i + ' y=' + j );
                     if(newField[i][j].status == 1){
-                        assert.equal(alive_newField[i][j].status, 1); 
-                    } 
+                        assert.equal(alive_newField[i][j].status, 1);
+                    }
                     else{
-                        assert.equal(alive_newField[i][j].status, 0); 
-                    }                       
+                        assert.equal(alive_newField[i][j].status, 0);
+                    }
                 }
             }
-        });    
+        });
     });
 });

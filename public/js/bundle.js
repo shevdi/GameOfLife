@@ -10403,7 +10403,6 @@
 	                _model.gameStart();
 	                $('#startButton').html('stop');
 	                $event.state = 'start';
-	                $event.speed = $('#speed').val();
 	            } else {
 	                _model.gameStop();
 	                $('#startButton').html('start');
@@ -10415,11 +10414,10 @@
 	        // dynamic speed change
 	        $('#speed').on("change", function () {
 	            var $event = jQuery.Event("changeStateAuto");
-	            if (_model.gameStatus() === true) {
+	            if (_model.gameStatus()) {
 	                $event.state = 'stop';
 	                $('body').trigger($event);
 	                $event.state = 'start';
-	                $event.speed = $('#speed').val() * 500;
 	                $('body').trigger($event);
 	            }
 	        });
@@ -10437,9 +10435,10 @@
 	    });
 
 	    $('body').bind('changeStateAuto', function (e) {
+	        console.log(e);
 	        var sw = $('#startButton').html();
 	        if (e.state == 'start') {
-	            tick = setInterval(changeField, Number(e.speed) * 100);
+	            tick = setInterval(changeField, $('#speed').val() * 200);
 	        } else if (e.state = 'stop') {
 	            clearInterval(tick);
 	        }
