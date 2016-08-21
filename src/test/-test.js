@@ -1,10 +1,16 @@
-import { Controller, View, Model, Cell } from ".bundle.js";
-import { assert } from "chai";
+import Model from "../js/model.js";
+import View from "../js/view.js";
+import Controller from "../js/controller.js";
+
+var model = new Model();
+var view = new View();
+var controller  = new Controller(view, model);
+import { assert } from 'chai';
 
 describe("GameOfLife", function(){
     beforeEach(function() {
         model.createField(15, 20);
-        field = model.getData();
+        var field = model.getData();
         $('#randomFill').prop('checked', false)
     });
 
@@ -15,10 +21,18 @@ describe("GameOfLife", function(){
 
     describe("creating field", function() {
         it("is array :", function() {
+            assert.equal(true, true);
+        });
+    });
+
+    describe("creating field", function() {
+        it("is array :", function() {
+            var field = model.getData();
             assert.typeOf(field, 'array');
         });
 
         it("equals", function() {
+            var field = model.getData();
             for ( var i = 0; i < field.length; i++){
                 for ( var j = 0; j < field[0].length; j++){
                     assert.equal(field[i][j].x, i);
@@ -32,6 +46,7 @@ describe("GameOfLife", function(){
 
     describe("Cell status", function() {
         it("changes cell status", function() {
+            var field = model.getData();
             for ( var i = 0; i < field.length; i++){
                 for ( var j = 0; j < field[0].length; j++){
                     var cell = controller.changeCellStatusForTesting( { id: "row" + i + "_col" + j, status: "dead" } );
@@ -43,9 +58,9 @@ describe("GameOfLife", function(){
         });
     });
 
-
     describe("Redrawing field", function() {
         it("compares counted field with right answer", function() {
+            var field = model.getData();
             var alive_newField = JSON.parse(JSON.stringify( field ));
 
             // cells for testing before processing
