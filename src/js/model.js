@@ -1,74 +1,65 @@
-import Cell from "./cell.js";
+import Cell from './cell.js';
 
-export default function() {
-    var field = [];
-    var game = false;
+export default function () {
+    let field = [];
+    let game = false;
 
-    var _notifyController = function () {    
+    const _notifyController = function () {
         $('body').trigger('updateView');
-    }
+    };
     // public methods
-    return  {
-        createField: function ( sizeX, sizeY, randomFill ) {   
-            field = [];     
-            for( var i = 0; i < sizeX; i++ )
-            {
-                field.push([]);   
-                for( var j = 0; j < sizeY; j++ )
-                {
-                    field[i].push(new Cell(i, j));              
-                }             
-            }  
-            
-            if(randomFill===true){
-                for( var i = 0; i < sizeX; i++ )
-                { 
-                    for( var j = 0; j < sizeY; j++ )
-                    {
-                        var random = Math.floor((Math.random() * 100) + 1); 
-                        if(random > 80){
+    return {
+        createField(sizeX, sizeY, randomFill) {
+            field = [];
+            for (let i = 0; i < sizeX; i++) {
+                field.push([]);
+                for (let j = 0; j < sizeY; j++) {
+                    field[i].push(new Cell(i, j));
+                }
+            }
+
+            if (randomFill === true) {
+                for (let i = 0; i < sizeX; i++) {
+                    for (let j = 0; j < sizeY; j++) {
+                        const random = Math.floor((Math.random() * 100) + 1);
+                        if (random > 80) {
                             field[i][j].changeStatus('alive');
                         }
-                    }             
-                } 
-            }                    
+                    }
+                }
+            }
             _notifyController();
         },
 
-        fieldState: function ( _field ) {   
-            field = _field;  
+        fieldState(_field) {
+            field = _field;
             _notifyController();
         },
 
-        cellStatus: function( cell ){ 
+        cellStatus(cell) {
             // При смене цвета точки таблица не перерисовывается
             field[cell.x][cell.y].changeStatus(cell.status);
         },
-        
-        getData: function(){           
+
+        getData() {
             return field;
         },
 
-        gameStatus: function(){ 
-            if(game == true){
+        gameStatus() {
+            if (game === true) {
                 return true;
-            }    
-            else{
+            } else {
                 return false;
-            }    
+            }
         },
 
-        gameStart: function(){ 
-            game = true; 
+        gameStart() {
+            game = true;
         },
 
-        gameStop: function(){ 
-            game = false; 
+        gameStop() {
+            game = false;
         },
     };
 }
-
-
-
-
 

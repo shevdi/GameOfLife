@@ -48,7 +48,7 @@
 	var $ = __webpack_require__(1);
 	var jQuery = __webpack_require__(1);
 
-	"use strict";
+	'use strict';
 
 	var _model = __webpack_require__(2);
 
@@ -67,10 +67,9 @@
 	__webpack_require__(6);
 
 
-	//init
-	var model = new _model2.default();
-	var view = new _view2.default();
-	var controller = new _controller2.default(view, model);
+	var model = (0, _model2.default)();
+	var view = (0, _view2.default)();
+	var controller = (0, _controller2.default)(view, model);
 
 
 /***/ },
@@ -10191,44 +10190,38 @@
 	            }
 
 	            if (randomFill === true) {
-	                for (var i = 0; i < sizeX; i++) {
-	                    for (var j = 0; j < sizeY; j++) {
+	                for (var _i = 0; _i < sizeX; _i++) {
+	                    for (var _j = 0; _j < sizeY; _j++) {
 	                        var random = Math.floor(Math.random() * 100 + 1);
 	                        if (random > 80) {
-	                            field[i][j].changeStatus('alive');
+	                            field[_i][_j].changeStatus('alive');
 	                        }
 	                    }
 	                }
 	            }
 	            _notifyController();
 	        },
-
 	        fieldState: function fieldState(_field) {
 	            field = _field;
 	            _notifyController();
 	        },
-
 	        cellStatus: function cellStatus(cell) {
 	            // При смене цвета точки таблица не перерисовывается
 	            field[cell.x][cell.y].changeStatus(cell.status);
 	        },
-
 	        getData: function getData() {
 	            return field;
 	        },
-
 	        gameStatus: function gameStatus() {
-	            if (game == true) {
+	            if (game === true) {
 	                return true;
 	            } else {
 	                return false;
 	            }
 	        },
-
 	        gameStart: function gameStart() {
 	            game = true;
 	        },
-
 	        gameStop: function gameStop() {
 	            game = false;
 	        }
@@ -10262,15 +10255,23 @@
 	    this.status = 0;
 
 	    this.isAlive = function () {
-	        if (this.status == 1) return 'alive';else return 'dead';
-	    }, this.changeStatus = function (_status) {
-
-	        if (_status == 'alive' || _status == 1 || _status == true) {
+	        if (this.status === 1) {
+	            return 'alive';
+	        } else {
+	            return 'dead';
+	        }
+	    };
+	    this.changeStatus = function (_status) {
+	        if (_status === 'alive' || _status === 1 || _status === true) {
 	            this.status = 1;
-	        } else if (_status == 'dead' || _status == 0 || _status == false) {
+	        } else if (_status === 'dead' || _status === 0 || _status === false) {
 	            this.status = 0;
 	        } else {
-	            if (_status == 0) this.status = 1;else this.status = 0;
+	            if (_status === 0) {
+	                this.status = 1;
+	            } else {
+	                this.status = 0;
+	            }
 	        }
 	    };
 	};
@@ -10284,7 +10285,7 @@
 	var $ = __webpack_require__(1);
 	var jQuery = __webpack_require__(1);
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -10296,12 +10297,12 @@
 	        var fragment = document.createDocumentFragment();
 	        // In table create rows and then columns. In id write number of column and row.
 	        for (var i = 0; i < field.length; i++) {
-	            var tr = document.createElement("tr");
-	            tr.setAttribute('id', 'row_num' + i);
+	            var tr = document.createElement('tr');
+	            tr.setAttribute('id', 'row_num${i}');
 	            fragment.appendChild(tr);
 	            for (var j = 0; j < field[0].length; j++) {
-	                var id = 'row' + field[i][j].x + '_col' + field[i][j].y;
-	                var td = document.createElement("td");
+	                var id = 'row${field[i][j].x}_col${field[i][j].y}';
+	                var td = document.createElement('td');
 	                td.setAttribute('id', id);
 	                td.setAttribute('class', field[i][j].isAlive());
 	                tr.appendChild(td);
@@ -10313,9 +10314,9 @@
 	        // Hide cells on borders
 	        $('#row_num0').css('display', 'none');
 	        $('#row_num' + (field.length - 1)).css('display', 'none');
-	        for (var i = 0; i < field.length; i++) {
-	            $('#row' + i + '_col0').css('display', 'none');
-	            $('#row' + i + '_col' + (field[0].length - 1)).css('display', 'none');
+	        for (var _i = 0; _i < field.length; _i++) {
+	            $('#row' + _i + '_col0').css('display', 'none');
+	            $('#row' + _i + '_col' + (field[0].length - 1)).css('display', 'none');
 	        }
 	    };
 
@@ -10326,12 +10327,6 @@
 	    };
 	};
 
-	var _cell = __webpack_require__(3);
-
-	var _cell2 = _interopRequireDefault(_cell);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 
 /***/ },
 /* 5 */
@@ -10341,7 +10336,7 @@
 	var $ = __webpack_require__(1);
 	var jQuery = __webpack_require__(1);
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -10352,117 +10347,12 @@
 	    var _model = model;
 	    var tick = null;
 
-	    //set the handlers for the view
-	    var _initView = function _initView() {
-	        // create field
-	        $("#createButton").on("click", function () {
-	            var $event = jQuery.Event("createField");
-	            $event.sizeX = parseInt($('#sizeX')[0].value) + 2;
-	            $event.sizeY = parseInt($('#sizeY')[0].value) + 2;
-	            if ($('#randomFill').is(':checked')) {
-	                $event.status = true;
-	            }
-	            $('#nextButton, #startButton, #speed').css('display', 'inline');
-	            $('body').trigger($event);
-	        });
-
-	        // create field on enter
-	        $('#createButton').on("keypress", function (e) {
-	            if (e.which == 13) {
-	                var $event = jQuery.Event("createField");
-	                $event.sizeX = parseInt($('#sizeX')[0].value) + 2;
-	                $event.sizeY = parseInt($('#sizeY')[0].value) + 2;
-	                if ($('#randomFill').is(':checked')) {
-	                    $event.status = true;
-	                }
-	                $('#nextButton, #startButton, #speed').css('display', 'inline');
-	                $('body').trigger($event);
-	            }
-	        });
-
-	        // change cell status
-	        $('table').on("click", 'td', function (e) {
-	            var cell = e.currentTarget;
-	            var $event = jQuery.Event("changeStatus");
-	            $event.id = $(cell).prop('id');
-	            $event.status = $(cell).prop('class');
-	            $('body').trigger($event);
-	        });
-
-	        // next step
-	        $('#nextButton').on("click", function () {
-	            var $event = jQuery.Event("changeState");
-	            $('body').trigger($event);
-	        });
-
-	        // start auto step
-	        $('#startButton').on("click", function () {
-	            var $event = jQuery.Event("changeStateAuto");
-	            var $sw = $('#startButton').html();
-	            if (_model.gameStatus() === false) {
-	                _model.gameStart();
-	                $('#startButton').html('stop');
-	                $event.state = 'start';
-	            } else {
-	                _model.gameStop();
-	                $('#startButton').html('start');
-	                $event.state = 'stop';
-	            }
-	            $('body').trigger($event);
-	        });
-
-	        // dynamic speed change
-	        $('#speed').on("change", function () {
-	            var $event = jQuery.Event("changeStateAuto");
-	            if (_model.gameStatus()) {
-	                $event.state = 'stop';
-	                $('body').trigger($event);
-	                $event.state = 'start';
-	                $('body').trigger($event);
-	            }
-	        });
-	    };
-	    _initView();
-
-	    // event binding
-	    $('body').bind('createField', function (e) {
-	        _model.createField(e.sizeX, e.sizeY, e.status);
-	    });
-
-	    $('body').bind('changeState', function (e) {
-	        var newField = _countField(_model.getData());
-	        _model.fieldState(newField);
-	    });
-
-	    $('body').bind('changeStateAuto', function (e) {
-	        console.log(e);
-	        var sw = $('#startButton').html();
-	        if (e.state == 'start') {
-	            tick = setInterval(changeField, $('#speed').val() * 200);
-	        } else if (e.state = 'stop') {
-	            clearInterval(tick);
-	        }
-
-	        function changeField() {
-	            var newField = _countField(_model.getData());
-	            _model.fieldState(newField);
-	        }
-	    });
-
-	    $('body').bind('changeStatus', function (e) {
-	        _model.cellStatus(_changeCellStatus(e));
-	    });
-
-	    $('body').bind('updateView', function (e) {
-	        _view.updateView(_model.getData());
-	    });
-
 	    function _changeCellStatus(e) {
 	        var splitId = e.id.split('_');
 	        e.row = splitId[0].substring(3);
 	        e.col = splitId[1].substring(3);
 	        var cell = new _cell2.default(e.row, e.col);
-	        if (e.status == 'dead') {
+	        if (e.status === 'dead') {
 	            cell.changeStatus('alive');
 	            $('#' + e.id).prop('class', 'alive');
 	        } else {
@@ -10470,42 +10360,6 @@
 	            $('#' + e.id).prop('class', 'dead');
 	        }
 	        return cell;
-	    }
-
-	    function _countField(field) {
-	        var newField = [];
-	        var lenX = field.length;
-	        var lenY = field[0].length;
-
-	        for (var i = 0; i < field.length; i++) {
-	            newField.push([]);
-	            for (var j = 0; j < field[0].length; j++) {
-	                var counter = 0;
-	                newField[i].push($.extend(true, [], field[i][j]));
-
-	                // Cells on borders are hidden and not counted
-	                if (i != 0 && j != 0 && i != minus(lenX) && j != minus(lenY)) {
-	                    counter = counter + field[i][plus(j)].status;
-	                    counter = counter + field[i][minus(j)].status;
-	                    counter = counter + field[minus(i)][j].status;
-	                    counter = counter + field[plus(i)][j].status;
-	                    counter = counter + field[plus(i)][minus(j)].status;
-	                    counter = counter + field[plus(i)][plus(j)].status;
-	                    counter = counter + field[minus(i)][plus(j)].status;
-	                    counter = counter + field[minus(i)][minus(j)].status;
-	                }
-	                if (field[i][j].isAlive() == 'alive') {
-	                    if (counter < 2 || counter > 3) {
-	                        newField[i][j].changeStatus('dead');
-	                    }
-	                } else {
-	                    if (counter == 3) {
-	                        newField[i][j].changeStatus('alive');
-	                    }
-	                }
-	            }
-	        }
-	        return newField;
 	    }
 
 	    function plus(number) {
@@ -10520,12 +10374,150 @@
 	        return num;
 	    }
 
+	    function _countField(field) {
+	        var newField = [];
+	        var lenX = field.length;
+	        var lenY = field[0].length;
+
+	        for (var i = 0; i < field.length; i++) {
+	            newField.push([]);
+	            for (var j = 0; j < field[0].length; j++) {
+	                var counter = 0;
+	                newField[i].push($.extend(true, [], field[i][j]));
+
+	                // Cells on borders are hidden and not counted
+	                if (i !== 0 && j !== 0 && i !== minus(lenX) && j !== minus(lenY)) {
+	                    counter += field[i][plus(j)].status;
+	                    counter += field[i][minus(j)].status;
+	                    counter += field[minus(i)][j].status;
+	                    counter += field[plus(i)][j].status;
+	                    counter += field[plus(i)][minus(j)].status;
+	                    counter += field[plus(i)][plus(j)].status;
+	                    counter += field[minus(i)][plus(j)].status;
+	                    counter += field[minus(i)][minus(j)].status;
+	                }
+	                if (field[i][j].isAlive() === 'alive') {
+	                    if (counter < 2 || counter > 3) {
+	                        newField[i][j].changeStatus('dead');
+	                    }
+	                } else {
+	                    if (counter === 3) {
+	                        newField[i][j].changeStatus('alive');
+	                    }
+	                }
+	            }
+	        }
+	        return newField;
+	    }
+
+	    function changeField() {
+	        var newField = _countField(_model.getData());
+	        _model.fieldState(newField);
+	    }
+
+	    // set the handlers for the view
+	    var _initView = function _initView() {
+	        // create field
+	        $('#createButton').on('click', function () {
+	            var $event = jQuery.Event('createField');
+	            $event.sizeX = parseInt($('#sizeX')[0].value, 10) + 2;
+	            $event.sizeY = parseInt($('#sizeY')[0].value, 10) + 2;
+	            if ($('#randomFill').is(':checked')) {
+	                $event.status = true;
+	            }
+	            $('#nextButton, #startButton, #speed').css('display', 'inline');
+	            $('body').trigger($event);
+	        });
+
+	        // create field on enter
+	        $('#createButton').on('keypress', function (e) {
+	            if (e.which === 13) {
+	                var $event = jQuery.Event('createField');
+	                $event.sizeX = parseInt($('#sizeX')[0].value, 10) + 2;
+	                $event.sizeY = parseInt($('#sizeY')[0].value, 10) + 2;
+	                if ($('#randomFill').is(':checked')) {
+	                    $event.status = true;
+	                }
+	                $('#nextButton, #startButton, #speed').css('display', 'inline');
+	                $('body').trigger($event);
+	            }
+	        });
+
+	        // change cell status
+	        $('table').on('click', 'td', function (e) {
+	            var cell = e.currentTarget;
+	            var $event = jQuery.Event('changeStatus');
+	            $event.id = $(cell).prop('id');
+	            $event.status = $(cell).prop('class');
+	            $('body').trigger($event);
+	        });
+
+	        // next step
+	        $('#nextButton').on('click', function () {
+	            var $event = jQuery.Event('changeState');
+	            $('body').trigger($event);
+	        });
+
+	        // start auto step
+	        $('#startButton').on('click', function () {
+	            var $event = jQuery.Event('changeStateAuto');
+	            if (_model.gameStatus() === false) {
+	                _model.gameStart();
+	                $('#startButton').html('stop');
+	                $event.state = 'start';
+	            } else {
+	                _model.gameStop();
+	                $('#startButton').html('start');
+	                $event.state = 'stop';
+	            }
+	            $('body').trigger($event);
+	        });
+
+	        // dynamic speed change
+	        $('#speed').on('change', function () {
+	            var $event = jQuery.Event('changeStateAuto');
+	            if (_model.gameStatus()) {
+	                $event.state = 'stop';
+	                $('body').trigger($event);
+	                $event.state = 'start';
+	                $('body').trigger($event);
+	            }
+	        });
+	    };
+
+	    _initView();
+
+	    // event binding
+	    $('body').bind('createField', function (e) {
+	        _model.createField(e.sizeX, e.sizeY, e.status);
+	    });
+
+	    $('body').bind('changeState', function () {
+	        var newField = _countField(_model.getData());
+	        _model.fieldState(newField);
+	    });
+
+	    $('body').bind('changeStateAuto', function (e) {
+	        if (e.state === 'start') {
+	            tick = setInterval(changeField, $('#speed').val() * 100);
+	        } else if (e.state === 'stop') {
+	            clearInterval(tick);
+	        }
+	    });
+
+	    $('body').bind('changeStatus', function (e) {
+	        _model.cellStatus(_changeCellStatus(e));
+	    });
+
+	    $('body').bind('updateView', function () {
+	        _view.updateView(_model.getData());
+	    });
+
 	    return {
 	        // public functions
 	        changeCellStatusForTesting: function changeCellStatusForTesting(e) {
 	            return _changeCellStatus(e);
 	        },
-
 	        countFieldForTesting: function countFieldForTesting(field) {
 	            return _countField(field);
 	        }
@@ -10535,14 +10527,6 @@
 	var _cell = __webpack_require__(3);
 
 	var _cell2 = _interopRequireDefault(_cell);
-
-	var _model2 = __webpack_require__(2);
-
-	var _model3 = _interopRequireDefault(_model2);
-
-	var _view2 = __webpack_require__(4);
-
-	var _view3 = _interopRequireDefault(_view2);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
