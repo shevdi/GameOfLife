@@ -22,12 +22,6 @@ describe('GameOfLife', function () {
 
     describe('creating field', function () {
         it('is array :', function () {
-            assert.equal(true, true);
-        });
-    });
-
-    describe('creating field', function () {
-        it('is array :', function () {
             const field = model.getData();
             assert.typeOf(field, 'array');
         });
