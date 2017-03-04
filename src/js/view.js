@@ -8,7 +8,7 @@ export default function () {
             tr.setAttribute('id', 'row_num${i}');
             fragment.appendChild(tr);
             for (let j = 0; j < field[0].length; j++) {
-                const id = 'row${field[i][j].x}_col${field[i][j].y}';
+                const id = `row${field[i][j].x}_col${field[i][j].y}`;
                 const td = document.createElement('td');
                 td.setAttribute('id', id);
                 td.setAttribute('class', field[i][j].isAlive());

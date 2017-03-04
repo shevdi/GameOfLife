@@ -10302,7 +10302,7 @@
 	            tr.setAttribute('id', 'row_num${i}');
 	            fragment.appendChild(tr);
 	            for (var j = 0; j < field[0].length; j++) {
-	                var id = 'row${field[i][j].x}_col${field[i][j].y}';
+	                var id = 'row' + field[i][j].x + '_col' + field[i][j].y;
 	                var td = document.createElement('td');
 	                td.setAttribute('id', id);
 	                td.setAttribute('class', field[i][j].isAlive());
